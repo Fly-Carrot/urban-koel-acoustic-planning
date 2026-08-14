@@ -1,19 +1,19 @@
 # Supplementary figures
 
-Publication-quality PDF files are the canonical figures. The `previews/` directory provides first-page PNG previews for browsing on GitHub. PDF and preview files share the same descriptive stem.
+Publication-quality PDF files are the canonical figures. The `previews/` directory provides first-page PNG previews for browsing on GitHub. PDF and preview files use the same short manuscript identifier; this index supplies their full titles and sections.
 
 | Figure | Title | Section | PDF | Preview |
 |---|---|---|---|---|
-| S1 | Monitoring network and recording effort | S1 | [`Figure_S01_Monitoring_Network_and_Recording_Effort.pdf`](Figure_S01_Monitoring_Network_and_Recording_Effort.pdf) | [PNG](previews/Figure_S01_Monitoring_Network_and_Recording_Effort.png) |
-| S2 | Whole-station validation of the daily-detection model | S2 | [`Figure_S02_Whole_Station_Daily_Detection_Validation.pdf`](Figure_S02_Whole_Station_Daily_Detection_Validation.pdf) | [PNG](previews/Figure_S02_Whole_Station_Daily_Detection_Validation.png) |
-| S3 | Whole-station validation of potential-host opportunity models | S3 | [`Figure_S03_Potential_Host_Opportunity_Validation.pdf`](Figure_S03_Potential_Host_Opportunity_Validation.pdf) | [PNG](previews/Figure_S03_Potential_Host_Opportunity_Validation.png) |
-| S4 | Host associations and propagated uncertainty | S4 | [`Figure_S04_Host_Associations_and_Propagated_Uncertainty.pdf`](Figure_S04_Host_Associations_and_Propagated_Uncertainty.pdf) | [PNG](previews/Figure_S04_Host_Associations_and_Propagated_Uncertainty.png) |
-| S5 | Transfer scale and residual spatial diagnostics | S4 | [`Figure_S05_Transfer_Scale_and_Residual_Spatial_Diagnostics.pdf`](Figure_S05_Transfer_Scale_and_Residual_Spatial_Diagnostics.pdf) | [PNG](previews/Figure_S05_Transfer_Scale_and_Residual_Spatial_Diagnostics.png) |
-| S6 | Joint acoustic-activity model and derived exposure | S5 | [`Figure_S06_Joint_Acoustic_Activity_Model_and_Derived_Exposure.pdf`](Figure_S06_Joint_Acoustic_Activity_Model_and_Derived_Exposure.pdf) | [PNG](previews/Figure_S06_Joint_Acoustic_Activity_Model_and_Derived_Exposure.png) |
-| S7 | City prediction and prediction-support classes | S6 | [`Figure_S07_City_Prediction_and_Prediction_Support_Classes.pdf`](Figure_S07_City_Prediction_and_Prediction_Support_Classes.pdf) | [PNG](previews/Figure_S07_City_Prediction_and_Prediction_Support_Classes.png) |
-| S8 | Overlap with planning-sensitive places and urban functions | S7 | [`Figure_S08_Planning_Sensitive_Places_and_Urban_Function_Overlap.pdf`](Figure_S08_Planning_Sensitive_Places_and_Urban_Function_Overlap.pdf) | [PNG](previews/Figure_S08_Planning_Sensitive_Places_and_Urban_Function_Overlap.png) |
-| S9 | Monitoring-priority surfaces | S8 | [`Figure_S09_Monitoring_Priority_Surfaces.pdf`](Figure_S09_Monitoring_Priority_Surfaces.pdf) | [PNG](previews/Figure_S09_Monitoring_Priority_Surfaces.png) |
-| S10 | Sequential Coverage Expansion and Prediction Validation candidates | S8 | [`Figure_S10_Sequential_Coverage_Expansion_and_Prediction_Validation_Candidates.pdf`](Figure_S10_Sequential_Coverage_Expansion_and_Prediction_Validation_Candidates.pdf) | [PNG](previews/Figure_S10_Sequential_Coverage_Expansion_and_Prediction_Validation_Candidates.png) |
+| S1 | Monitoring network and recording effort | S1 | [`Figure_S01.pdf`](Figure_S01.pdf) | [PNG](previews/Figure_S01.png) |
+| S2 | Whole-station validation of the daily-detection model | S2 | [`Figure_S02.pdf`](Figure_S02.pdf) | [PNG](previews/Figure_S02.png) |
+| S3 | Whole-station validation of potential-host opportunity models | S3 | [`Figure_S03.pdf`](Figure_S03.pdf) | [PNG](previews/Figure_S03.png) |
+| S4 | Host associations and propagated uncertainty | S4 | [`Figure_S04.pdf`](Figure_S04.pdf) | [PNG](previews/Figure_S04.png) |
+| S5 | Transfer scale and residual spatial diagnostics | S4 | [`Figure_S05.pdf`](Figure_S05.pdf) | [PNG](previews/Figure_S05.png) |
+| S6 | Joint acoustic-activity model and derived exposure | S5 | [`Figure_S06.pdf`](Figure_S06.pdf) | [PNG](previews/Figure_S06.png) |
+| S7 | City prediction and prediction-support classes | S6 | [`Figure_S07.pdf`](Figure_S07.pdf) | [PNG](previews/Figure_S07.png) |
+| S8 | Overlap with planning-sensitive places and urban functions | S7 | [`Figure_S08.pdf`](Figure_S08.pdf) | [PNG](previews/Figure_S08.png) |
+| S9 | Monitoring-priority surfaces | S8 | [`Figure_S09.pdf`](Figure_S09.pdf) | [PNG](previews/Figure_S09.png) |
+| S10 | Sequential Coverage Expansion and Prediction Validation candidates | S8 | [`Figure_S10.pdf`](Figure_S10.pdf) | [PNG](previews/Figure_S10.png) |
 
 ## Accessibility
 
