@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "If you use this software or its curated verification products, please cite this release."
+message: "If you use these supplementary materials, please cite the associated manuscript and this repository release."
 type: software
-title: "AI-assisted acoustic monitoring for adaptive urban wildlife planning"
+title: "Supplementary code and data for: Where wildlife is heard: AI-powered mapping of bird acoustic activity for adaptive monitoring and urban planning"
 version: 0.1.0
 date-released: 2026-08-14
 repository-code: "https://github.com/Fly-Carrot/urban-koel-acoustic-planning"
@@ -33,4 +33,3 @@ keywords:
   - spatial validation
   - adaptive monitoring
   - acoustic exposure
-
