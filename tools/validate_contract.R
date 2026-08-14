@@ -35,49 +35,9 @@ binary_extensions <- paste0(
 )
 allowed_supplementary_binaries <- c(
   "supplementary-materials/supplementary-information/Supplementary_Information.pdf",
-  file.path("supplementary-materials", "tables", paste0(c(
-    "Table_S01_Monitoring_Station_Sampling_Coverage_Koel_Detections_and_Spatial_Validation_Folds",
-    "Table_S02_Detection_History_Reconciliation",
-    "Table_S03_Acoustic_Identification_Workflow_and_Validation_Evidence",
-    "Table_S04_Candidate_Daily_Detection_Models",
-    "Table_S05_Detection_Model_Audits",
-    "Table_S06_Master_Analytical_Variable_Dictionary",
-    "Table_S07_External_Datasets_and_Geoprocessing",
-    "Table_S08_Potential_Host_Candidates_and_Validation",
-    "Table_S09_Koel_Model_Development_and_Model_Roles",
-    "Table_S10_Transfer_Scale_and_Spatial_Diagnostics",
-    "Table_S11_Joint_Model_Definitions_and_Estimands",
-    "Table_S12_Joint_Model_Results_and_Exposure_Summaries",
-    "Table_S13_City_Projection_and_Prediction_Interpretation_Domain",
-    "Table_S14_Area_of_Applicability_and_Prediction_Support_Classes",
-    "Table_S15_Planning_Sensitive_Places_and_Urban_Functions",
-    "Table_S16_Adaptive_Monitoring_Design",
-    "Table_S17_Software_Model_Provenance_and_Availability"
-  ), ".xlsx")),
-  file.path("supplementary-materials", "figures", paste0(c(
-    "Figure_S01_Monitoring_Network_and_Recording_Effort",
-    "Figure_S02_Whole_Station_Daily_Detection_Validation",
-    "Figure_S03_Potential_Host_Opportunity_Validation",
-    "Figure_S04_Host_Associations_and_Propagated_Uncertainty",
-    "Figure_S05_Transfer_Scale_and_Residual_Spatial_Diagnostics",
-    "Figure_S06_Joint_Acoustic_Activity_Model_and_Derived_Exposure",
-    "Figure_S07_City_Prediction_and_Prediction_Support_Classes",
-    "Figure_S08_Planning_Sensitive_Places_and_Urban_Function_Overlap",
-    "Figure_S09_Monitoring_Priority_Surfaces",
-    "Figure_S10_Sequential_Coverage_Expansion_and_Prediction_Validation_Candidates"
-  ), ".pdf")),
-  file.path("supplementary-materials", "figures", "previews", paste0(c(
-    "Figure_S01_Monitoring_Network_and_Recording_Effort",
-    "Figure_S02_Whole_Station_Daily_Detection_Validation",
-    "Figure_S03_Potential_Host_Opportunity_Validation",
-    "Figure_S04_Host_Associations_and_Propagated_Uncertainty",
-    "Figure_S05_Transfer_Scale_and_Residual_Spatial_Diagnostics",
-    "Figure_S06_Joint_Acoustic_Activity_Model_and_Derived_Exposure",
-    "Figure_S07_City_Prediction_and_Prediction_Support_Classes",
-    "Figure_S08_Planning_Sensitive_Places_and_Urban_Function_Overlap",
-    "Figure_S09_Monitoring_Priority_Surfaces",
-    "Figure_S10_Sequential_Coverage_Expansion_and_Prediction_Validation_Candidates"
-  ), ".png"))
+  file.path("supplementary-materials", "tables", sprintf("Table_S%02d.xlsx", 1:17)),
+  file.path("supplementary-materials", "figures", sprintf("Figure_S%02d.pdf", 1:10)),
+  file.path("supplementary-materials", "figures", "previews", sprintf("Figure_S%02d.png", 1:10))
 )
 tracked_binaries <- relative_files[grepl(binary_extensions, relative_files, ignore.case = TRUE)]
 assert_release(setequal(tracked_binaries, allowed_supplementary_binaries),

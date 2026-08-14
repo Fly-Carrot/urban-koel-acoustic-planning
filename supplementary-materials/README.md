@@ -31,7 +31,7 @@ The supplementary sections follow the manuscript workflow:
 
 The public copies preserve manuscript-facing summaries while protecting recorder security, site privacy and third-party licences. Exact recorder coordinates, exact candidate-HEX identifiers, granular points of interest, raw audio, model weights and third-party source rasters are not redistributed. Public station summaries use anonymised codes `ST01`-`ST31`; monitoring candidates use route-specific ranks `L1`-`L15` and `V1`-`V15`. Figure S1 retains map-scale station context required to understand the validation design, without distributing coordinate records.
 
-The PDF and individual files contain the same scientific results. Stable public filenames are used here even when private production filenames carried dates or workflow labels. See [`manifests/supplementary_artifacts.csv`](manifests/supplementary_artifacts.csv) for the full mapping and provenance description.
+The PDF and individual files contain the same scientific results. Individual attachments use stable short manuscript identifiers (`Table_S01.xlsx`, `Figure_S01.pdf`); the table and figure indexes provide their full titles, and [`manifests/supplementary_artifacts.csv`](manifests/supplementary_artifacts.csv) preserves the mapping to private production filenames and provenance.
 
 ## Licensing
 
