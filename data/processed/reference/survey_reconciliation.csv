@@ -1,0 +1,8 @@
+"metric","value","expected","pass"
+"valid_survey_days",9912,9912,TRUE
+"surveyed_siteweeks",1500,1500,TRUE
+"positive_koel_days",2682,2682,TRUE
+"koel_nondetection_days",7230,7230,TRUE
+"recording_minutes",1398905,1398905,TRUE
+"zero_bird_event_effort_days",350,350,TRUE
+"zero_bird_event_full_days",280,280,TRUE

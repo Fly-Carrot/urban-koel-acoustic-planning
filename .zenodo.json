@@ -1,0 +1,20 @@
+{
+  "title": "AI-assisted acoustic monitoring for adaptive urban wildlife planning",
+  "upload_type": "software",
+  "description": "A curated, support-aware workflow linking AI-assisted passive acoustic monitoring, life-history-informed modelling, spatial validation and adaptive monitoring design for Asian Koel acoustic activity in Shenzhen.",
+  "creators": [
+    {"name": "Chen, Yuhao"},
+    {"name": "Hao, Zezhou"},
+    {"name": "Zhang, Chengyun"},
+    {"name": "Li, Zongying"},
+    {"name": "Chen, Zihao"},
+    {"name": "Fang, Wenqiang"},
+    {"name": "Zhang, Lyu Bing"},
+    {"name": "Zhou, Ting"},
+    {"name": "Liu, Yang"}
+  ],
+  "access_right": "open",
+  "license": "other-open",
+  "keywords": ["passive acoustic monitoring", "Asian Koel", "urban planning", "spatial validation", "adaptive monitoring"],
+  "notes": "Scoped licensing: software is BSD-3-Clause; project-owned aggregate data are CC BY 4.0; third-party materials are not redistributed. See LICENSE, data/LICENSE.md and THIRD_PARTY_NOTICES.md."
+}

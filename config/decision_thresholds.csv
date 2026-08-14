@@ -1,0 +1,9 @@
+decision,threshold,role,boundary
+collinearity_review,"absolute pairwise r >= 0.70 or VIF >= 5",Candidate-review trigger,Prespecified review gate rather than automatic deletion
+MCMC_Rhat,"Rhat <= 1.01",Convergence gate,Applied with bulk and tail effective sample size checks
+transfer_model_selection,"paired whole-site delta ELPD 95% site-clustered interval entirely above zero",Primary predictive decision,Brier calibration and Moran diagnostics are supporting evidence
+scale_replacement,"candidate-vs-250 m delta ELPD 95% interval entirely above zero",Operational scale decision,250 m retained when scales were statistically indistinguishable
+AOA_supported,"zero range exceedances and dissimilarity <= leave-one-site-out 95th percentile",Prediction-support class,Threshold learned from monitored predictor space
+AOA_boundary,"zero range exceedances and dissimilarity above leave-one-site-out 95th percentile",Prediction-support class,Signals edge of monitored support
+AOA_extrapolated,"one predictor outside training range",Prediction-support class,Used only as Moderate Extrapolation after PID cross-classification
+AOA_severely_unsupported,"two or more range exceedances or dissimilarity above maximum leave-one-site-out value",Monitoring-gap class,No activity interpretation

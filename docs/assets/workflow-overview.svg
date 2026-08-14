@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="330" viewBox="0 0 1400 330" role="img" aria-labelledby="title desc">
+  <title id="title">From passive acoustic monitoring to adaptive urban planning</title>
+  <desc id="desc">Five linked stages: AI-assisted acoustic histories, host-informed joint modelling, held-station spatial validation, support-aware city prediction, and adaptive monitoring.</desc>
+  <style>
+    text{font-family:Helvetica,Arial,sans-serif;fill:#17313a} .h{font-size:27px;font-weight:700}.s{font-size:18px;fill:#4f646d}.n{font-size:22px;font-weight:700;fill:white}.arrow{stroke:#7c8d93;stroke-width:5;fill:none;marker-end:url(#m)}
+  </style>
+  <defs><marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7c8d93"/></marker></defs>
+  <rect width="1400" height="330" rx="20" fill="#f7faf9"/>
+  <g transform="translate(35 64)">
+    <rect width="230" height="190" rx="18" fill="#e8f2f0" stroke="#16838a" stroke-width="2"/>
+    <circle cx="36" cy="36" r="23" fill="#16838a"/><text class="n" x="29" y="44">1</text>
+    <text class="h" x="24" y="94">PAM + AI</text><text class="h" x="24" y="126">histories</text>
+    <text class="s" x="24" y="163">Effort-confirmed days</text><text class="s" x="24" y="187">and positive minutes</text>
+  </g>
+  <path class="arrow" d="M274 159 H311"/>
+  <g transform="translate(320 64)">
+    <rect width="230" height="190" rx="18" fill="#e8f2f0" stroke="#16838a" stroke-width="2"/>
+    <circle cx="36" cy="36" r="23" fill="#16838a"/><text class="n" x="29" y="44">2</text>
+    <text class="h" x="24" y="94">Joint acoustic</text><text class="h" x="24" y="126">activity model</text>
+    <text class="s" x="24" y="163">ψ, p, μ+ and E</text><text class="s" x="24" y="187">with host uncertainty</text>
+  </g>
+  <path class="arrow" d="M559 159 H596"/>
+  <g transform="translate(605 64)">
+    <rect width="230" height="190" rx="18" fill="#eaf2f8" stroke="#2f75a8" stroke-width="2"/>
+    <circle cx="36" cy="36" r="23" fill="#2f75a8"/><text class="n" x="29" y="44">3</text>
+    <text class="h" x="24" y="94">Spatial</text><text class="h" x="24" y="126">validation</text>
+    <text class="s" x="24" y="163">Whole stations held out</text><text class="s" x="24" y="187">100 / 250 / 500 m</text>
+  </g>
+  <path class="arrow" d="M844 159 H881"/>
+  <g transform="translate(890 64)">
+    <rect width="230" height="190" rx="18" fill="#eef5ed" stroke="#4f8e55" stroke-width="2"/>
+    <circle cx="36" cy="36" r="23" fill="#4f8e55"/><text class="n" x="29" y="44">4</text>
+    <text class="h" x="24" y="94">Supported city</text><text class="h" x="24" y="126">prediction</text>
+    <text class="s" x="24" y="163">PID × AOA classes</text><text class="s" x="24" y="187">planning intersections</text>
+  </g>
+  <path class="arrow" d="M1129 159 H1166"/>
+  <g transform="translate(1175 64)">
+    <rect width="190" height="190" rx="18" fill="#fff1e4" stroke="#de7834" stroke-width="2"/>
+    <circle cx="36" cy="36" r="23" fill="#de7834"/><text class="n" x="29" y="44">5</text>
+    <text class="h" x="24" y="94">Adaptive</text><text class="h" x="24" y="126">monitoring</text>
+    <text class="s" x="24" y="163">Expand coverage</text><text class="s" x="24" y="187">validate uncertainty</text>
+  </g>
+</svg>
+

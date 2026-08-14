@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this software or its curated verification products, please cite this release."
+type: software
+title: "AI-assisted acoustic monitoring for adaptive urban wildlife planning"
+version: 0.1.0
+date-released: 2026-08-14
+repository-code: "https://github.com/Fly-Carrot/urban-koel-acoustic-planning"
+url: "https://github.com/Fly-Carrot/urban-koel-acoustic-planning"
+license: BSD-3-Clause
+authors:
+  - given-names: Yuhao
+    family-names: Chen
+  - given-names: Zezhou
+    family-names: Hao
+  - given-names: Chengyun
+    family-names: Zhang
+  - given-names: Zongying
+    family-names: Li
+  - given-names: Zihao
+    family-names: Chen
+  - given-names: Wenqiang
+    family-names: Fang
+  - given-names: Lyu Bing
+    family-names: Zhang
+  - given-names: Ting
+    family-names: Zhou
+  - given-names: Yang
+    family-names: Liu
+keywords:
+  - passive acoustic monitoring
+  - Asian Koel
+  - urban planning
+  - spatial validation
+  - adaptive monitoring
+  - acoustic exposure
+

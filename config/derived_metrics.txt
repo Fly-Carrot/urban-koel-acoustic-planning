@@ -1,0 +1,4 @@
+mu_plus = positive-day sampled-minute probability after crossing the daily detection hurdle
+E = psi * p * mu_plus
+window_probability = posterior predictive probability from the beta-binomial count distribution; no independent-minute product approximation
+
