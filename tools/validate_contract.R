@@ -29,20 +29,27 @@ assert_release(length(relative_files) > 0L, "No release files were found.")
 assert_release(!any(file.info(absolute_files)$isdir), "Directory entries entered the file contract.")
 assert_release(!any(file.info(absolute_files)$size >= 50 * 1024^2), "A release file is 50 MB or larger.")
 
-prohibited_extensions <- paste0(
+binary_extensions <- paste0(
   "\\.(wav|flac|mp3|m4a|aac|aif|aiff|opus|tif|tiff|gpkg|kml|kmz|pbf|shp|dbf|shx|",
-  "geojson|rds|rda|rdata|qs|fst|docx|pptx|xlsx|xls|stan\\.csv)$"
+  "geojson|rds|rda|rdata|qs|fst|docx|pptx|xlsx|xls|pdf|png|stan\\.csv)$"
 )
-assert_release(!any(grepl(prohibited_extensions, relative_files, ignore.case = TRUE)),
-               "A prohibited binary, geometry, audio or private object is tracked.")
+allowed_supplementary_binaries <- c(
+  "supplementary-materials/supplementary-information/Supplementary_Information.pdf",
+  sprintf("supplementary-materials/tables/Table_S%02d.xlsx", 1:17),
+  sprintf("supplementary-materials/figures/Figure_S%02d.pdf", 1:10),
+  sprintf("supplementary-materials/figures/previews/Figure_S%02d.png", 1:10)
+)
+tracked_binaries <- relative_files[grepl(binary_extensions, relative_files, ignore.case = TRUE)]
+assert_release(setequal(tracked_binaries, allowed_supplementary_binaries),
+               "Tracked binary assets differ from the explicit supplementary-material allowlist.")
 assert_release(!any(grepl("^(data/(raw|full|private)/|archive/|materials/|tmp/|\\.agent-os/|\\.agents/)", relative_files)),
                "A private or workspace-management path is tracked.")
 
-text_extensions <- "\\.(R|md|csv|tsv|yml|yaml|json|cff|txt|stan|svg|lock|gitignore)$"
+text_extensions <- "\\.(R|py|md|csv|tsv|yml|yaml|json|cff|txt|stan|svg|lock|gitignore)$"
 text_files <- relative_files[grepl(text_extensions, relative_files, ignore.case = TRUE) |
                                basename(relative_files) %in% c("Makefile", "LICENSE", ".gitignore")]
 # This scanner necessarily contains the patterns it searches for; exclude only its own source.
-scan_files <- setdiff(text_files, "tools/validate_contract.R")
+scan_files <- setdiff(text_files, c("tools/validate_contract.R", "tools/validate_supplementary_assets.py"))
 read_text <- function(path) paste(readLines(file.path(root, path), warn = FALSE, encoding = "UTF-8"), collapse = "\n")
 texts <- setNames(lapply(scan_files, read_text), scan_files)
 has_match <- function(pattern, perl = TRUE, ignore.case = FALSE) {
@@ -121,7 +128,20 @@ if (git_available) {
   }
 }
 
+supplementary_log <- tempfile("supplementary-contract-", fileext = ".log")
+supplementary_status <- system2(
+  "python3",
+  c("tools/validate_supplementary_assets.py"),
+  stdout = supplementary_log,
+  stderr = supplementary_log
+)
+if (!identical(supplementary_status, 0L)) {
+  cat(readLines(supplementary_log, warn = FALSE), sep = "\n")
+  stop("Supplementary-material contract failed.", call. = FALSE)
+}
+cat(readLines(supplementary_log, warn = FALSE), sep = "\n")
+
 cat(sprintf(
-  "Release contract PASS: %d tracked files, 14 drivers, 11 checksummed reference products, no exact-coordinate schema, prohibited payload, local path or credential signature.\n",
+  "Release contract PASS: %d tracked files, 14 drivers, 11 checksummed reference products and 38 supplementary assets; no exact-coordinate schema, prohibited payload, local path or credential signature.\n",
   length(relative_files)
 ))

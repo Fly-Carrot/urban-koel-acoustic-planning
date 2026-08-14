@@ -53,3 +53,7 @@ data/private/
 *.xls
 *.log
 *.stan.csv
+!supplementary-materials/tables/Table_S??.xlsx
+!supplementary-materials/supplementary-information/Supplementary_Information.pdf
+!supplementary-materials/figures/Figure_S??.pdf
+!supplementary-materials/figures/previews/Figure_S??.png

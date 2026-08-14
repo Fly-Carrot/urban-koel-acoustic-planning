@@ -15,6 +15,7 @@ These materials document the analyses reported in the manuscript and provide a p
 
 The repository contains curated, manuscript-aligned materials rather than the complete private analysis workspace. Public contents include:
 
+- the complete Supplementary Information PDF, 17 independent tables and 10 figures;
 - 14 ordered analysis drivers with documented input and output contracts;
 - aggregate, non-sensitive reference products used to verify manuscript results;
 - exact Stan source for the public joint-model components;
@@ -39,12 +40,26 @@ R/          shared and tested R functions
 stan/       Stan model source used by the conditional full profile
 config/     formula, predictor, seed, threshold and provenance registries
 data/       synthetic examples and frozen non-sensitive reference summaries
+supplementary-materials/  complete PDF, individual tables and figures, and manifests
 docs/       script, data, reproduction and scientific-boundary documentation
 tests/      release-contract and numerical tests
 tools/      curation and release-validation utilities
 ```
 
 Detailed descriptions of every public driver are provided in [`docs/script_reference.md`](docs/script_reference.md). Data fields are documented in [`docs/data_dictionary.md`](docs/data_dictionary.md), and the model roles and formulae are recorded in [`docs/model_registry.md`](docs/model_registry.md) and [`config/model_registry.csv`](config/model_registry.csv).
+
+## Manuscript supplementary materials
+
+The repository also serves as the manuscript's public supplementary-material archive. The four parallel collections keep submission-facing files separate from the executable workflow:
+
+| Collection | Direct link |
+|---|---|
+| Complete Supplementary Information | [Open PDF](supplementary-materials/supplementary-information/Supplementary_Information.pdf) |
+| Seventeen supplementary tables | [Browse tables](supplementary-materials/tables/) |
+| Ten supplementary figures and previews | [Browse figures](supplementary-materials/figures/) |
+| Inventory and SHA-256 checksums | [Browse manifests](supplementary-materials/manifests/) |
+
+The crosswalk from Supplementary Methods S1-S9 to each table and figure is provided in [`supplementary-materials/README.md`](supplementary-materials/README.md). Public copies use anonymised station and candidate codes; exact recorder coordinates, exact candidate centroids and granular POIs remain outside the archive.
 
 ## Reproducing the supplementary results
 
@@ -132,7 +147,7 @@ The release contract additionally scans tracked files for exact-coordinate schem
 
 Only anonymised aggregate or simulated data admitted by the release contract are included. Data access and exclusion decisions are documented in [`data/README.md`](data/README.md), [`docs/data_access.md`](docs/data_access.md) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
-Code is released under BSD-3-Clause. Curated project-owned summary data are released under CC BY 4.0. Third-party data remain governed by their original licences and are not relicensed by this repository.
+Code is released under BSD-3-Clause. Curated project-owned summary data and manuscript supplementary materials are released under CC BY 4.0. Third-party data remain governed by their original licences and are not relicensed by this repository.
 
 ## Citation
 
