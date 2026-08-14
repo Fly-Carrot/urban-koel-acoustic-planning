@@ -1,7 +1,7 @@
 {
   "title": "Supplementary code and data for: Where wildlife is heard: AI-powered mapping of bird acoustic activity for adaptive monitoring and urban planning",
   "upload_type": "software",
-  "description": "Supplementary code, aggregate processed data, model source and reproducibility workflow associated with a manuscript on AI-powered mapping of Asian Koel acoustic activity for adaptive monitoring and urban planning in Shenzhen.",
+  "description": "Public supplementary materials, analysis code, aggregate processed data, model source and reproducibility workflow associated with a manuscript on AI-powered mapping of Asian Koel acoustic activity for adaptive monitoring and urban planning in Shenzhen. The archive includes the complete Supplementary Information, 17 independent tables and 10 figures.",
   "creators": [
     {"name": "Chen, Yuhao"},
     {"name": "Hao, Zezhou"},
@@ -15,6 +15,6 @@
   ],
   "access_right": "open",
   "license": "other-open",
-  "keywords": ["passive acoustic monitoring", "Asian Koel", "urban planning", "spatial validation", "adaptive monitoring"],
+  "keywords": ["passive acoustic monitoring", "Asian Koel", "urban planning", "spatial validation", "adaptive monitoring", "supplementary material"],
   "notes": "Scoped licensing: software is BSD-3-Clause; project-owned aggregate data are CC BY 4.0; third-party materials are not redistributed. See LICENSE, data/LICENSE.md and THIRD_PARTY_NOTICES.md."
 }
