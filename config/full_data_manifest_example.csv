@@ -1,0 +1,17 @@
+asset_id,path
+survey_effort,data/full/model_ready/survey_effort.csv
+acoustic_detections,data/full/model_ready/acoustic_detections.csv
+weekly_covariates,data/full/model_ready/weekly_covariates_250.csv
+weekly_covariates_100,data/full/model_ready/weekly_covariates_100.csv
+weekly_covariates_250,data/full/model_ready/weekly_covariates_250.csv
+weekly_covariates_500,data/full/model_ready/weekly_covariates_500.csv
+daily_detection_covariates,data/full/model_ready/daily_detection_covariates.csv
+fold_registry,data/full/model_ready/fold_registry.csv
+joint_daily_data,data/full/model_ready/joint_daily_data.csv
+hourly_calling_counts,data/full/model_ready/hourly_calling_counts.csv
+training_predictors_250,data/full/model_ready/training_predictors_250.csv
+city_predictors_250,data/full/model_ready/city_predictors_250.csv
+reference_detection_density_draws,data/full/model_ready/reference_detection_density_draws.csv
+planning_sensitive_points,data/full/model_ready/planning_sensitive_points.csv
+urban_function_overlap,data/full/model_ready/urban_function_overlap.csv
+monitoring_candidates,data/full/model_ready/monitoring_candidates.csv

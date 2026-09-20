@@ -1,6 +1,6 @@
 # Data dictionary
 
-## Frozen public reference products
+## Public reference products
 
 | File | Unit | Core fields | Meaning |
 |---|---|---|---|
@@ -31,3 +31,21 @@
 
 Percent columns are stored on a 0–100 scale; probability columns are stored on a 0–1 scale. Missing values are empty CSV fields, never coded as zero.
 
+## Model-ready inputs for `make full`
+
+| Asset | Required fields |
+|---|---|
+| `survey_effort` | `station_id`, `date`, `scheduled_minutes`, `usable_minutes` |
+| `acoustic_detections` | `station_id`, `date`, `sampled_minute`, `species_group`; optional `retained` or `positive` |
+| `weekly_covariates_*` | `station_id`, `study_week` and the registered environmental predictors |
+| `daily_detection_covariates` | station/week/day keys, anthropogenic-event rate and frog-event rate |
+| `fold_registry` | `station_id`, `fold_id` |
+| `joint_daily_data` | daily counts plus the Koel, host, environmental and observation covariates used by the joint Stan model |
+| `hourly_calling_counts` | `station_id`, `date`, `clock_hour`, `positive_minutes`, `sampled_minutes` |
+| `training_predictors_250` | station ID and seven environmental predictors |
+| `city_predictors_250` | cell ID, seven predictors, dominant land cover and permanent-water flag |
+| `planning_sensitive_points` | `cell_id`, `context_class` |
+| `urban_function_overlap` | `cell_id`, `context_class`, `overlap_area_m2` |
+| `monitoring_candidates` | private candidate ID, projected coordinates and seven predictors |
+
+The seven environmental predictors are `trees`, `built`, `grass`, `road_density`, `tree_edge_area_50m`, `dist_water_m_nearest` and `elevation`. Exact geometry stays outside the public repository.

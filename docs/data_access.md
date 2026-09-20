@@ -1,41 +1,25 @@
-# Data access and exclusions
+# Data access
 
 ## Included
 
-- reconciled study-level counts;
-- model formula and predictor registries;
-- posterior coefficient summaries;
-- held-station comparison summaries;
-- 52-week city summaries without geometry;
-- aggregate prediction-support and planning-overlap summaries;
-- anonymised adaptive-monitoring sequence diagnostics;
-- small synthetic example data for interface checks.
+- manuscript and Supplementary Information files;
+- aggregate model, validation, prediction and monitoring summaries;
+- synthetic example data;
+- R and Stan analysis code.
 
-## Excluded
+## Not redistributed
 
-- raw and segmented audio;
-- exact current or proposed PAM coordinates and detailed timestamps linked to a location;
-- station-level environmental extractions and city geometry;
-- granular POI names, identifiers and coordinates;
-- third-party remote-sensing rasters and OpenStreetMap extracts;
-- BirdNET and other AI model weights;
-- MCMC fit objects, compiled Stan binaries and raw chain CSV files;
-- private manuscript, cloud and local-workstation paths.
+- raw or segmented audio;
+- exact recorder and candidate-site coordinates;
+- event-level detections and detailed timestamps linked to locations;
+- granular POI records;
+- licensed remote-sensing, road and administrative spatial data;
+- AI model weights and raw MCMC chains.
 
-## Full-data contract and current release boundary
+These exclusions reflect data volume, site security, privacy and third-party licences.
 
-The public `full` profile intentionally stops. The repository preserves formulas, registries and exact Stan source, but private-input adapters are not distributed because the required acoustic histories, locations, licensed spatial layers and candidate geometries are restricted. A future approved full release may implement the logical contract below without changing the 14-driver interface.
+## Model-ready inputs
 
-A user with approved access can create `data/full/manifest.csv` with these logical assets:
+The full analysis reads logical assets from `data/full/manifest.csv`. Copy [`../config/full_data_manifest_example.csv`](../config/full_data_manifest_example.csv), replace each example path with an approved local file, and keep the data outside Git.
 
-| asset_id | required content |
-|---|---|
-| `survey_histories` | anonymised station-week-day histories, effort and positive-minute counts |
-| `host_histories` | matched histories for the three potential-host groups |
-| `site_predictors_100_250_500` | circular-neighbourhood predictors at all tested radii |
-| `fold_registry` | frozen whole-station fold assignment |
-| `city_predictors_250` | approved, licensed HEX-centroid prediction table |
-| `poi_and_functions` | licensed planning layers or precomputed aggregate overlaps |
-| `source_licences` | machine-readable licence and attribution registry |
-
-An approved implementation must provide a relative path, SHA-256, schema version, licence status and privacy status for every asset. A manifest alone does not enable this pre-publication release and does not waive the user's legal or ethical obligations.
+Station and candidate identifiers may be anonymised. Files used for spatial prediction must retain a common cell identifier, while exact geometry can remain in the user's protected workspace.

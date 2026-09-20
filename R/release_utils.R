@@ -82,18 +82,8 @@ write_step_log <- function(step, profile, status, details = "") {
   invisible(path)
 }
 
-require_full_inputs <- function() {
-  abort_release(paste(
-    "The pre-publication repository exposes the full model specification and Stan source,",
-    "but does not distribute private-input adapters or restricted inputs.",
-    "Use the public verify profile; see docs/data_access.md for the full-data contract."
-  ))
-}
-
 run_public_step <- function(step, profile) {
   root <- repo_root()
-  if (identical(profile, "full")) require_full_inputs()
-
   if (step == "00_preflight") {
     source(file.path(root, "tools", "validate_contract.R"), local = new.env(parent = globalenv()))
   } else if (step == "01_prepare_survey_histories") {

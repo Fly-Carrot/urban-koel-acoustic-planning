@@ -1,12 +1,12 @@
-public_product,internal_lineage,public_driver,verification_scope,release_boundary
-survey_reconciliation.csv,phase_a_response_detection/effort_response_audit.csv,01_prepare_survey_histories,Exact study-level counts,No site IDs dates filenames or coordinates
-model_registry_public.csv,phase_b and phase_c frozen formula registries,02_select_detection_backbone,Frozen public formulas,No private fit paths
-predictor_registry_public.csv,phase_c predictor and source audits,03_build_environmental_predictors,Public definitions and supports,No raster pixels or coordinates
-host_groups.csv,phase_b selected host-response registry,04_fit_potential_host_opportunity,Exact taxonomic membership,No event-level records
-model_effects.csv,phase_b pooled effects and phase_m pooled density report,05_fit_koel_weekly_opportunity,Reported coefficient summaries,No posterior draws or fit objects
-transfer_validation.csv,phase_c and phase_e whole-station score summaries,06_validate_scale_and_transfer,Reported predictive contrasts and diagnostics,No site-level scores or fold membership
-weekly_acoustic_opportunity.csv,phase_l supported weekly summary,08_predict_citywide_activity,52-week aggregate curve,No geometry
-weekly_acoustic_exposure.csv,phase_m all-day exposure summary,08_predict_citywide_activity,52-week aggregate curve,No geometry
-prediction_support_classes.csv,phase_l interpretation-tier summary,09_classify_prediction_support,Four class totals,No HEX identifiers or geometry
-planning_overlap.csv,phase_n functional-zone and POI planning tables,10_summarise_planning_overlap,Aggregate planning summaries,No POI identifiers names or coordinates
-adaptive_monitoring_sequences.csv,phase_o deployment portfolios,11_design_adaptive_monitoring,Route ranks and gains,No candidate IDs coordinates districts or exact distance
+public_product,method_step,public_driver,source_input,public_boundary
+survey_reconciliation.csv,Survey histories,01_prepare_survey_histories,survey_effort and acoustic_detections,No station coordinates or filenames
+model_registry_public.csv,Detection model,02_select_detection_backbone,daily_detection_covariates,Formulas and roles only
+predictor_registry_public.csv,Environmental predictors,03_build_environmental_predictors,weekly and city predictor tables,No raster pixels or geometry
+host_groups.csv,Potential-host models,04_fit_potential_host_opportunity,host acoustic histories,No event-level records
+model_effects.csv,Koel and calling-density models,05_fit_koel_weekly_opportunity and 07_fit_joint_calling_density,posterior model draws,Coefficient summaries only
+transfer_validation.csv,Whole-station validation,06_validate_scale_and_transfer,fold_registry and fold predictions,No station-level scores or fold membership
+weekly_acoustic_opportunity.csv,City prediction,08_predict_citywide_activity,city cell-week posterior draws,Weekly aggregate curve without geometry
+weekly_acoustic_exposure.csv,Acoustic exposure,08_predict_citywide_activity,aligned psi p and mu_plus draws,Weekly aggregate curve without geometry
+prediction_support_classes.csv,PID and AOA,09_classify_prediction_support,land cover and predictor distance,Class totals without cell identifiers
+planning_overlap.csv,Planning overlap,10_summarise_planning_overlap,points polygons and posterior predictions,No POI records or coordinates
+adaptive_monitoring_sequences.csv,Monitoring design,11_design_adaptive_monitoring,gap cells uncertainty and candidates,Anonymous ranks without coordinates

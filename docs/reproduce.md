@@ -1,6 +1,6 @@
-# Reproducing the public release
+# Reproducing the analysis
 
-## Verification in a clean clone
+## Check the public summaries
 
 ```bash
 make setup
@@ -8,44 +8,15 @@ make verify
 make test
 ```
 
-`verify` executes the 14 public drivers in order. The drivers validate and copy frozen reference summaries into `outputs/`, generate `verification_overview.pdf`, and then enforce the numerical, terminology, privacy and release contracts. A failed check stops with a non-zero exit code.
+This route uses the aggregate files in `data/processed/reference/` and writes its results to `outputs/`.
 
-The public verification path uses base R so that the reported summary products remain easy to inspect. The analysis was developed with additional Bayesian and spatial libraries listed in `docs/system_requirements.md`; these are needed only for the conditional full profile.
+## Refit with approved inputs
 
-## Smoke profile
+1. Copy `config/full_data_manifest_example.csv` to `data/full/manifest.csv`.
+2. Replace the example paths with local model-ready files.
+3. Install the packages in `docs/system_requirements.md` and CmdStan.
+4. Run `make full`.
 
-```bash
-make smoke
-```
+The full route fits the host and Koel occupancy models, repeats fivefold whole-station validation at three spatial scales, fits the Stan density models, predicts all city cell-weeks, classifies PID/AOA, summarises planning overlaps and ranks new monitoring sites.
 
-The smoke profile checks interfaces and release invariants quickly. It is a software test and does not create new ecological evidence.
-
-## Full-profile boundary
-
-```bash
-make full
-```
-
-The command stops with an explicit boundary message in this pre-publication release. The repository preserves the complete public interface, model registry and final Stan source, while the private-input adapters and restricted source assets remain excluded. An approved future implementation would require effort-confirmed Koel and potential-host histories, licensed environmental covariates, anonymised fold membership, approved city predictor assets and the posterior-draw schedule. Exact logical assets and access boundaries are documented in `docs/data_access.md`.
-
-The current article-facing products propagate three independently sampled, complete potential-host opportunity surfaces through each validation fold. This M=3 design checks that the transfer conclusion is not driven by one host-posterior draw; it is a computationally bounded uncertainty propagation, not an adaptive large-M stabilization claim.
-
-## Determinism and tolerances
-
-- Frozen CSV products use invariant counts and numerical tolerance tests.
-- PDF files are regenerated but are not compared byte-for-byte because graphics devices can differ across systems.
-- Any proposed change to a reported value must update the source registry, expected tests, changelog and release version together.
-
-## Clean-clone check
-
-Before a release, clone the pushed repository into a new directory and run:
-
-```bash
-make setup
-make contract
-make verify
-make test
-git status --short
-```
-
-The final command should show only ignored files below `outputs/`.
+The three host posterior surfaces are independent complete draws. They test whether the transfer result depends on one host estimate; they do not represent a large multiple-imputation analysis.
