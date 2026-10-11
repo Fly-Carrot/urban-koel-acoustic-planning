@@ -6,6 +6,9 @@
 - Aligned per-stage occupancy and Stan sampling settings with Supplementary Data 17.
 - Corrected the recording-effort transformation to log(1 + sampled minutes / 60).
 - Updated CEE supplementary files and retained public-data redactions.
+- Aligned whole-station scoring and probability-scale pooling of three host refits.
+- Restored the final hourly design and paired daily/hourly posterior calculation of city exposure.
+- Added small-data tests for these calculations and documented the retained input requirements.
 
 ## 0.1.0 — 2026-08-14
 

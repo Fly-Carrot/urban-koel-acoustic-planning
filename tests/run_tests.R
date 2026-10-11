@@ -90,3 +90,8 @@ if (!identical(contract_status, 0L)) {
   stop("Release contract failed inside the numerical test suite.", call. = FALSE)
 }
 cat("All numerical and release-contract tests passed.\n")
+if (requireNamespace("data.table", quietly = TRUE) && requireNamespace("reformulas", quietly = TRUE)) {
+  source("tests/test_final_calculations.R")
+} else {
+  cat("Skipped final-calculation tests: install data.table and reformulas, then rerun make test.\n")
+}

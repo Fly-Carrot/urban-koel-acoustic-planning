@@ -17,6 +17,6 @@ This route uses the aggregate files in `data/processed/reference/` and writes it
 3. Install the packages in `docs/system_requirements.md` and CmdStan.
 4. Run `make full`.
 
-The full route fits host and Koel occupancy models, runs held-station validation examples, fits Stan density models, predicts city cell-weeks, classifies PID/AOA, summarises planning overlaps and ranks new monitoring sites. It is a selected-workflow implementation, not an exact replay of all archived fits. See [analysis_coverage.md](analysis_coverage.md) for the remaining differences and [mcmc_settings.md](mcmc_settings.md) for sampling profiles.
+The full route fits host and Koel models, scores complete held-station histories, fits daily and hourly density models, predicts city cell-weeks, classifies PID/AOA, summarises planning overlaps and ranks new monitoring sites. It retains the final calculation logic, without replaying every candidate fit. Model-ready tables must use the retained covariate scaling and matching host draw IDs. See [analysis_coverage.md](analysis_coverage.md) for the scope and [mcmc_settings.md](mcmc_settings.md) for sampling profiles.
 
-The three host posterior surfaces are independent complete draws. They test whether the transfer result depends on one host estimate; they do not represent a large multiple-imputation analysis.
+Three complete sets of host posterior surfaces carry host uncertainty through three Koel refits. Predictive probabilities are pooled with equal weights. Three sets are a limited uncertainty-propagation analysis, not a stabilised large-M analysis.

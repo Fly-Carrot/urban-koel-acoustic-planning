@@ -5,6 +5,7 @@ source(file.path("R", "occupancy_models.R"))
 source(file.path("R", "transfer_validation.R"))
 source(file.path("R", "calling_density.R"))
 source(file.path("R", "city_prediction.R"))
+source(file.path("R", "exposure_prediction.R"))
 source(file.path("R", "prediction_support.R"))
 source(file.path("R", "planning_overlap.R"))
 source(file.path("R", "monitoring_design.R"))
@@ -15,7 +16,7 @@ check_full_inputs <- function() {
     "survey_effort", "acoustic_detections", "weekly_covariates",
     "weekly_covariates_100", "weekly_covariates_250", "weekly_covariates_500",
     "daily_detection_covariates", "fold_registry", "joint_daily_data",
-    "hourly_calling_counts", "training_predictors_250", "city_predictors_250",
+    "hourly_calling_counts", "host_density_scaling", "training_predictors_250", "city_predictors_250",
     "planning_sensitive_points", "urban_function_overlap", "monitoring_candidates"
   )
   missing <- setdiff(required, manifest$asset_id)

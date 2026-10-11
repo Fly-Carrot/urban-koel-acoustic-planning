@@ -31,6 +31,12 @@ run_city_prediction <- function(n_draws = 600L, n_exposure_draws = 300L) {
   M <- length(koel_models$three_host)
   per_model <- ceiling(n_draws / M)
   predicted <- vector("list", M)
+  exposure_by_imputation <- vector("list", M)
+  joint <- readRDS(file.path(full_output_dir("07_calling_density"), "joint_daily_posteriors.rds"))
+  hourly <- readRDS(file.path(full_output_dir("07_calling_density"), "hourly_posterior.rds"))
+  density_scaling <- as.data.frame(read_table(full_asset("host_density_scaling"),
+                                             c("imputation", "host_group", "centre", "scale")))
+  if (M != 3L || length(joint) != M) stop("City exposure requires the three matching host imputations.", call. = FALSE)
 
   for (m in seq_len(M)) {
     model_grid <- data.table::copy(grid)
@@ -47,6 +53,11 @@ run_city_prediction <- function(n_draws = 600L, n_exposure_draws = 300L) {
     beta <- beta[keep, , drop = FALSE]
     x <- prediction_design(koel_three_host_formula(), model_grid, colnames(beta))
     predicted[[m]] <- stats::plogis(x %*% t(beta))
+    equal_host_z <- annual_equal_scale_host(host_models, scaling, as.data.frame(model_grid), density_scaling, m)
+    exposure_by_imputation[[m]] <- predict_modular_exposure(
+      as.data.frame(model_grid), equal_host_z, joint[[m]], hourly,
+      n_draws = max(1L, floor(n_exposure_draws / M)), imputation = m
+    )
   }
   draws <- do.call(cbind, predicted)[, seq_len(min(n_draws, sum(vapply(predicted, ncol, integer(1))))), drop = FALSE]
   summary <- data.table::data.table(
@@ -59,25 +70,17 @@ run_city_prediction <- function(n_draws = 600L, n_exposure_draws = 300L) {
   )
   summary[, psi_cri_width := psi_q975 - psi_q025]
 
-  reference_path <- full_asset("reference_detection_density_draws", required = FALSE)
-  if (!is.null(reference_path)) {
-    reference <- read_table(reference_path, c("p", "mu_plus"))
-    # Retain equal contributions from the three host imputations.
-    draw_groups <- rep(seq_len(M), times = vapply(predicted, ncol, integer(1)))[seq_len(ncol(draws))]
-    per_group <- max(1L, floor(n_exposure_draws / M))
-    exposure_keep <- unlist(lapply(split(seq_len(ncol(draws)), draw_groups), function(g) {
-      g[unique(as.integer(round(seq(1, length(g), length.out = min(per_group, length(g))))))]
-    }), use.names = FALSE)
-    index <- rep(seq_len(nrow(reference)), length.out = length(exposure_keep))
-    exposure <- sweep(draws[, exposure_keep, drop = FALSE], 2, reference$p[index] * reference$mu_plus[index], "*")
-    summary[, `:=`(
-      exposure_mean = rowMeans(exposure),
-      exposure_q025 = apply(exposure, 1, stats::quantile, 0.025),
-      exposure_q975 = apply(exposure, 1, stats::quantile, 0.975)
-    )]
-  }
+  sizes <- vapply(exposure_by_imputation, ncol, integer(1))
+  if (length(unique(sizes)) != 1L) stop("Host imputations must contribute equal exposure draws.", call. = FALSE)
+  exposure <- do.call(cbind, exposure_by_imputation)
+  summary[, `:=`(
+    exposure_mean = rowMeans(exposure),
+    exposure_q025 = apply(exposure, 1, stats::quantile, 0.025),
+    exposure_q975 = apply(exposure, 1, stats::quantile, 0.975)
+  )]
 
   out <- full_output_dir("08_city_prediction")
   write_table(summary, file.path(out, "city_week_predictions.csv"))
   saveRDS(draws, file.path(out, "city_week_psi_draws.rds"))
+  saveRDS(exposure, file.path(out, "city_week_exposure_draws.rds"))
 }

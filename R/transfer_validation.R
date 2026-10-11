@@ -49,7 +49,7 @@ scale_fold_covariates <- function(train, test, occurrence_terms, detection_terms
 }
 
 score_heldout_history <- function(fit, test, occurrence_formula, detection_formula,
-                                  posterior_draws = 500L, random_effect_draws = 50L,
+                                  posterior_draws = 500L, random_effect_draws = 100L,
                                   seed = 1L) {
   x_occ <- tpg_design(test, occurrence_formula, "occ")
   x_det_all <- tpg_design(test, detection_formula, "det")
@@ -87,6 +87,8 @@ score_heldout_history <- function(fit, test, occurrence_formula, detection_formu
 
   valid_week <- apply(!is.na(y), c(1, 2), any)
   output <- vector("list", sum(valid_week))
+  # Keep each new station effect shared across all weeks in that station.
+  site_log_likelihood <- matrix(0, nrow = dim(y)[1], ncol = ncol(p))
   counter <- 0L
   for (key in which(as.vector(valid_week))) {
     counter <- counter + 1L
@@ -106,6 +108,7 @@ score_heldout_history <- function(fit, test, occurrence_formula, detection_formu
     }
     site <- ((key - 1L) %% dim(y)[1]) + 1L
     week <- ((key - 1L) %/% dim(y)[1]) + 1L
+    site_log_likelihood[site, ] <- site_log_likelihood[site, ] + log_likelihood
     output[[counter]] <- data.frame(
       station_id = dimnames(y)[[1]][site],
       study_week = dimnames(y)[[2]][week],
@@ -114,22 +117,63 @@ score_heldout_history <- function(fit, test, occurrence_formula, detection_formu
       log_predictive_density = log_mean_exp(log_likelihood)
     )
   }
-  do.call(rbind, output)
+  output <- do.call(rbind, output)
+  joint <- apply(site_log_likelihood, 1, log_mean_exp)
+  output$site_log_predictive_density <- joint[match(output$station_id, dimnames(y)[[1]])]
+  output
+}
+
+pool_host_scores <- function(points) {
+  keys <- c("station_id", "study_week", "model_id", "scale_m", "fold_id")
+  groups <- split(seq_len(nrow(points)), interaction(points[keys], drop = TRUE))
+  do.call(rbind, lapply(groups, function(index) {
+    x <- points[index, , drop = FALSE]
+    out <- x[1, keys, drop = FALSE]
+    out$observed_any <- x$observed_any[1]
+    out$predicted_any <- mean(x$predicted_any)
+    # Equal-weight mixture of predictive probabilities, not mean log scores.
+    out$log_predictive_density <- log_mean_exp(x$log_predictive_density)
+    out$site_log_predictive_density <- log_mean_exp(x$site_log_predictive_density)
+    out
+  }))
 }
 
 summarise_heldout_scores <- function(scores) {
   scores <- data.frame(scores)
+  calibration <- c(NA_real_, NA_real_)
+  if (length(unique(scores$observed_any)) == 2L) {
+    calibration_fit <- tryCatch(stats::glm(
+      observed_any ~ stats::qlogis(pmin(pmax(predicted_any, 1e-8), 1 - 1e-8)),
+      family = stats::binomial(), data = scores
+    ), error = function(e) NULL)
+    if (!is.null(calibration_fit)) calibration <- unname(stats::coef(calibration_fit)[1:2])
+  }
   data.frame(
     n_site_weeks = nrow(scores),
-    heldout_elpd = sum(scores$log_predictive_density),
+    heldout_elpd = sum(unique(scores[, c("station_id", "site_log_predictive_density")])$site_log_predictive_density),
     brier = mean((scores$observed_any - scores$predicted_any)^2),
-    calibration_intercept = unname(stats::coef(stats::glm(
-      observed_any ~ 1,
-      offset = stats::qlogis(pmin(pmax(predicted_any, 1e-6), 1 - 1e-6)),
-      family = stats::binomial(),
-      data = scores
-    ))[[1]])
+    calibration_intercept = calibration[1],
+    calibration_slope = calibration[2]
   )
+}
+
+paired_station_contrast <- function(station_scores) {
+  keys <- c("station_id", "scale_m", "fold_id")
+  a <- station_scores[station_scores$model_id == "three_host", c(keys, "site_log_predictive_density")]
+  b <- station_scores[station_scores$model_id == "no_host", c(keys, "site_log_predictive_density")]
+  paired <- merge(a, b, by = keys, suffixes = c("_host", "_no_host"))
+  if (nrow(paired) != nrow(a) || nrow(a) != nrow(b) || anyDuplicated(paired[keys])) {
+    stop("The station contrast requires matching scores for both models.", call. = FALSE)
+  }
+  paired$delta <- paired$site_log_predictive_density_host - paired$site_log_predictive_density_no_host
+  do.call(rbind, lapply(split(paired, paired$scale_m), function(x) {
+    n <- nrow(x)
+    delta <- sum(x$delta)
+    se <- if (n > 1L) sqrt(n * stats::var(x$delta)) else NA_real_
+    data.frame(scale_m = x$scale_m[1], n_stations = n, delta_elpd_host_minus_no_host = delta,
+               station_clustered_se = se, interval_low = delta - 1.96 * se,
+               interval_high = delta + 1.96 * se)
+  }))
 }
 
 run_transfer_validation <- function(M = 3L) {
@@ -256,13 +300,7 @@ run_transfer_validation <- function(M = 3L) {
   }
 
   points <- do.call(rbind, point_rows)
-  pooled <- aggregate(
-    cbind(predicted_any, log_predictive_density) ~ station_id + study_week + model_id + scale_m + fold_id,
-    data = points,
-    FUN = mean
-  )
-  observed <- unique(points[, c("station_id", "study_week", "observed_any", "model_id", "scale_m", "fold_id")])
-  pooled <- merge(pooled, observed, by = c("station_id", "study_week", "model_id", "scale_m", "fold_id"))
+  pooled <- pool_host_scores(points)
   metrics <- do.call(rbind, lapply(split(pooled, list(pooled$scale_m, pooled$fold_id, pooled$model_id)), function(x) {
     out <- summarise_heldout_scores(x)
     out$scale_m <- x$scale_m[[1]]
@@ -272,6 +310,9 @@ run_transfer_validation <- function(M = 3L) {
   }))
   out <- full_output_dir("06_transfer_validation")
   write_table(pooled, file.path(out, "heldout_predictions.csv"))
+  station_scores <- unique(pooled[, c("station_id", "model_id", "scale_m", "fold_id", "site_log_predictive_density")])
+  write_table(station_scores, file.path(out, "heldout_station_scores.csv"))
+  write_table(paired_station_contrast(station_scores), file.path(out, "paired_station_contrasts.csv"))
   write_table(metrics, file.path(out, "heldout_metrics.csv"))
   write_table(do.call(rbind, scaling_rows), file.path(out, "fold_scaling.csv"))
 }

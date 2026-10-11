@@ -6,7 +6,7 @@
 - GNU Make;
 - `sha256sum`, `shasum` or `openssl`.
 
-`make verify` and `make test` use base R.
+`make verify` and the summary checks in `make test` use base R. The final-calculation tests also need `data.table` and `reformulas`; otherwise they are explicitly skipped.
 
 ## Full analysis
 

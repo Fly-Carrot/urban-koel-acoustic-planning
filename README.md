@@ -75,7 +75,7 @@ The full route requires R packages listed in [`docs/system_requirements.md`](doc
 
 ## Scope
 
-The public `verify` route rebuilds reported summaries from non-sensitive processed products. The `full` route needs approved model-ready inputs and does not yet reproduce every archived scoring and prediction step exactly. See [`docs/analysis_coverage.md`](docs/analysis_coverage.md) for the remaining differences.
+The public `verify` route rebuilds reported summaries from non-sensitive processed products. The `full` route follows the retained analysis with approved model-ready inputs; historical candidate runs are omitted. It has not been rerun as a complete numerical reproduction of the paper. See [`docs/analysis_coverage.md`](docs/analysis_coverage.md) for scope and input requirements.
 
 Potential-host acoustic opportunity is predictive context and does not establish local parasitism. Mapped acoustic activity does not measure abundance, human presence or annoyance. PID and AOA describe prediction support; they do not alter prediction values.
 

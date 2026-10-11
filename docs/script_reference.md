@@ -36,16 +36,18 @@ The scripts run in manuscript order. `verify` checks the published summaries; `f
 
 - Withholds complete stations in five folds.
 - Repeats host and Koel fitting at 100, 250 and 500 m, then reports ELPD, Brier score and calibration.
+- Scores complete station histories with one shared unseen-station effect; pools host imputations as an equal-weight probability mixture.
 
 ## `07_fit_joint_calling_density`
 
-- Fits the daily hurdle-density model and the hourly extension in Stan.
-- Combines aligned weekly opportunity, detectability and positive-day minute density.
+- Fits three HEQZ daily joint models and a D1 hourly model in Stan.
+- D1 uses annual terms and two hour harmonics, conditioning on a positive day.
 
 ## `08_predict_citywide_activity`
 
 - Projects the coordinate-free three-host model across 52 weeks.
 - Writes posterior means, medians, credible intervals and interval width for every cell-week.
+- Combines matched HEQZ occurrence, detection and host-season density draws with D1 hour effects. Uses 144 scheduled minutes per reference day; multiplies components before summarising exposure.
 
 ## `09_classify_prediction_support`
 

@@ -11,7 +11,7 @@ joint_daily_data,data/full/model_ready/joint_daily_data.csv
 hourly_calling_counts,data/full/model_ready/hourly_calling_counts.csv
 training_predictors_250,data/full/model_ready/training_predictors_250.csv
 city_predictors_250,data/full/model_ready/city_predictors_250.csv
-reference_detection_density_draws,data/full/model_ready/reference_detection_density_draws.csv
+host_density_scaling,data/full/model_ready/host_density_scaling.csv
 planning_sensitive_points,data/full/model_ready/planning_sensitive_points.csv
 urban_function_overlap,data/full/model_ready/urban_function_overlap.csv
 monitoring_candidates,data/full/model_ready/monitoring_candidates.csv

@@ -40,8 +40,9 @@ Percent columns are stored on a 0–100 scale; probability columns are stored on
 | `weekly_covariates_*` | `station_id`, `study_week` and the registered environmental predictors |
 | `daily_detection_covariates` | station/week/day keys, anthropogenic-event rate and frog-event rate |
 | `fold_registry` | `station_id`, `fold_id` |
-| `joint_daily_data` | daily counts plus the Koel, host, environmental and observation covariates used by the joint Stan model |
-| `hourly_calling_counts` | `station_id`, `date`, `clock_hour`, `positive_minutes`, `sampled_minutes` |
+| `joint_daily_data` | `imputation` (1, 2, 3), daily counts, and the Koel, host, environmental and observation covariates used by HEQZ. Repeat each survey for its matching host imputation. `reference_log_effort_z` is `(log1p(144/60) - training_mean_log_effort) / training_sd_log_effort`, constant within each imputation. Reference acoustic-context covariates and station effect are zero. |
+| `hourly_calling_counts` | `station_id`, `date`, `clock_hour` (0–23), `positive_minutes`, `sampled_minutes`, `sin_week`, `cos_week`. Include surveyed zero-count hours; the model retains positive days only. |
+| `host_density_scaling` | `imputation`, `host_group`, `centre`, `scale`. Use retained annual-mean training scales for `corvid`, `sturnid`, `laughingthrush`, and the scale of their equal-weight mean (`equal_scale`). Do not recompute these scales from city cells. |
 | `training_predictors_250` | station ID and seven environmental predictors |
 | `city_predictors_250` | cell ID, seven predictors, dominant land cover and permanent-water flag |
 | `planning_sensitive_points` | `cell_id`, `context_class` |

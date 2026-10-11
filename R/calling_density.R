@@ -12,7 +12,7 @@ build_joint_stan_data <- function(daily) {
     "sin_week", "cos_week", "corvid_host_psi_z", "sturnid_host_psi_z",
     "laughingthrush_host_psi_z", "log_effort_z",
     "log1p_anthropogenic_rate_z", "log1p_frog_rate_z",
-    "equal_scale_host_index_z"
+    "equal_scale_host_index_z", "reference_log_effort_z"
   )
   missing <- setdiff(needed, names(daily))
   if (length(missing)) stop("The joint-model table is missing: ", paste(missing, collapse = ", "), call. = FALSE)
@@ -47,6 +47,11 @@ build_joint_stan_data <- function(daily) {
   reference <- rep(0, ncol(x_det))
   names(reference) <- colnames(x_det)
   reference["(Intercept)"] <- 1
+  effort_reference <- unique(daily$reference_log_effort_z)
+  if (length(effort_reference) != 1L || !is.finite(effort_reference)) {
+    stop("Provide the retained standardized 144-minute reference effort.", call. = FALSE)
+  }
+  reference["log_effort_z"] <- effort_reference
 
   list(
     G = nrow(group),
@@ -66,7 +71,7 @@ build_joint_stan_data <- function(daily) {
     end_day = group$end_day,
     any_positive = group$any_positive,
     x_det_reference = unname(reference),
-    n_reference = as.integer(stats::median(daily$usable_minutes))
+    n_reference = 144L
   )
 }
 
@@ -97,18 +102,23 @@ fit_cmdstan_model <- function(stan_file, data, output_dir, seed, profile = "dail
 build_hourly_stan_data <- function(hourly) {
   require_package("data.table")
   hourly <- data.table::as.data.table(hourly)
-  needed <- c("station_id", "date", "clock_hour", "positive_minutes", "sampled_minutes")
+  needed <- c("station_id", "date", "clock_hour", "positive_minutes", "sampled_minutes", "sin_week", "cos_week")
   missing <- setdiff(needed, names(hourly))
   if (length(missing)) stop("The hourly table is missing: ", paste(missing, collapse = ", "), call. = FALSE)
   hourly <- hourly[sampled_minutes > 0]
+  hourly <- hourly[, if (sum(positive_minutes) > 0) .SD, by = .(station_id, date)]
+  if (!nrow(hourly)) stop("Hourly density needs at least one positive day.", call. = FALSE)
+  if (any(hourly$positive_minutes > hourly$sampled_minutes)) stop("Positive counts exceed effort.", call. = FALSE)
+  # Hour midpoints and two harmonics match the retained D1 design.
+  theta <- 2 * pi * (hourly$clock_hour + 0.5) / 24
   hourly[, `:=`(
-    sin_hour = sin(2 * pi * clock_hour / 24),
-    cos_hour = cos(2 * pi * clock_hour / 24),
+    sin_hour_1 = sin(theta), cos_hour_1 = cos(theta),
+    sin_hour_2 = sin(2 * theta), cos_hour_2 = cos(2 * theta),
     day_id = .GRP
   ), by = .(station_id, date)]
   data.table::setorder(hourly, day_id, clock_hour)
   day <- hourly[, .(start_hour = .I[1], end_hour = .I[.N]), by = day_id]
-  x <- stats::model.matrix(~ sin_hour + cos_hour, data = hourly)
+  x <- stats::model.matrix(~ sin_week + cos_week + sin_hour_1 + cos_hour_1 + sin_hour_2 + cos_hour_2, data = hourly)
   list(
     J = nrow(day),
     R = nrow(hourly),
@@ -125,24 +135,34 @@ build_hourly_stan_data <- function(hourly) {
 run_calling_density_models <- function() {
   require_package("posterior")
   daily <- read_table(full_asset("joint_daily_data"))
+  if (!"imputation" %in% names(daily) || !setequal(unique(daily$imputation), 1:3)) {
+    stop("joint_daily_data must contain the three retained host imputations (imputation = 1, 2, 3).", call. = FALSE)
+  }
   out <- full_output_dir("07_calling_density")
-  daily_data <- build_joint_stan_data(daily)
-  daily_fit <- fit_cmdstan_model(
-    file.path(repo_root(), "stan", "462_joint_occupancy_hurdle_intensity.stan"),
-    daily_data,
-    file.path(out, "daily_chains"),
-    2026082501L
-  )
-  daily_fit$save_object(file.path(out, "joint_daily_fit.rds"))
-  write_table(
-    posterior::summarise_draws(
-      daily_fit$draws(c("beta_occ", "alpha_det", "gamma_int", "phi", "sigma_det"))
-    ),
-    file.path(out, "joint_daily_summary.csv")
-  )
+  bundles <- summaries <- vector("list", 3L)
+  for (m in 1:3) {
+    daily_data <- build_joint_stan_data(daily[imputation == m])
+    chain_dir <- file.path(out, paste0("daily_chains_M", m))
+    ensure_dir(chain_dir)
+    daily_fit <- fit_cmdstan_model(
+      file.path(repo_root(), "stan", "462_joint_occupancy_hurdle_intensity.stan"),
+      daily_data, chain_dir, 2026082501L + m
+    )
+    bundles[[m]] <- list(
+      draws = as.matrix(daily_fit$draws(c("beta_occ", "alpha_det", "gamma_int"), format = "matrix")),
+      occurrence_names = colnames(daily_data$X_occ),
+      detection_names = colnames(daily_data$X_det),
+      x_det_reference = daily_data$x_det_reference
+    )
+    summaries[[m]] <- data.frame(imputation = m, posterior::summarise_draws(
+      daily_fit$draws(c("beta_occ", "alpha_det", "gamma_int", "phi", "sigma_det"))))
+  }
+  saveRDS(bundles, file.path(out, "joint_daily_posteriors.rds"))
+  write_table(do.call(rbind, summaries), file.path(out, "joint_daily_summary.csv"))
 
   hourly <- read_table(full_asset("hourly_calling_counts"))
   hourly_data <- build_hourly_stan_data(hourly)
+  ensure_dir(file.path(out, "hourly_chains"))
   hourly_fit <- fit_cmdstan_model(
     file.path(repo_root(), "stan", "470_conditional_hourly_density.stan"),
     hourly_data,
@@ -151,6 +171,8 @@ run_calling_density_models <- function() {
     profile = "hourly"
   )
   hourly_fit$save_object(file.path(out, "hourly_density_fit.rds"))
+  saveRDS(list(draws = as.matrix(hourly_fit$draws(c("beta", "sigma_day", "log_phi"), format = "matrix")),
+               design_names = colnames(hourly_data$X)), file.path(out, "hourly_posterior.rds"))
   write_table(
     posterior::summarise_draws(hourly_fit$draws(c("beta", "phi", "sigma_day"))),
     file.path(out, "hourly_density_summary.csv")
