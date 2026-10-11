@@ -70,16 +70,23 @@ build_joint_stan_data <- function(daily) {
   )
 }
 
-fit_cmdstan_model <- function(stan_file, data, output_dir, seed) {
+stan_sampling_settings <- function(profile = c("daily", "hourly")) {
+  profile <- match.arg(profile)
+  iterations <- if (profile == "daily") 750L else 1000L
+  list(iter_warmup = iterations, iter_sampling = iterations)
+}
+
+fit_cmdstan_model <- function(stan_file, data, output_dir, seed, profile = "daily") {
   require_package("cmdstanr")
+  settings <- stan_sampling_settings(profile)
   model <- cmdstanr::cmdstan_model(stan_file)
   model$sample(
     data = data,
     seed = seed,
     chains = 4,
     parallel_chains = 4,
-    iter_warmup = 1000,
-    iter_sampling = 1500,
+    iter_warmup = settings$iter_warmup,
+    iter_sampling = settings$iter_sampling,
     adapt_delta = 0.95,
     max_treedepth = 12,
     output_dir = output_dir,
@@ -140,7 +147,8 @@ run_calling_density_models <- function() {
     file.path(repo_root(), "stan", "470_conditional_hourly_density.stan"),
     hourly_data,
     file.path(out, "hourly_chains"),
-    2026082502L
+    2026082502L,
+    profile = "hourly"
   )
   hourly_fit$save_object(file.path(out, "hourly_density_fit.rds"))
   write_table(

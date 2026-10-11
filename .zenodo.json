@@ -1,7 +1,7 @@
 {
-  "title": "Supplementary code and data for: Where wildlife is heard: AI-powered mapping of bird acoustic activity for adaptive monitoring and urban planning",
+  "title": "Supplementary materials for: Urban planning leaves an audible legacy in a megacity’s bird soundscape",
   "upload_type": "software",
-  "description": "Public supplementary materials, analysis code, aggregate processed data, model source and reproducibility workflow associated with a manuscript on AI-powered mapping of Asian Koel acoustic activity for adaptive monitoring and urban planning in Shenzhen. The archive includes the complete Supplementary Information, 17 independent tables and 10 figures.",
+  "description": "Supplementary materials for the manuscript Urban planning leaves an audible legacy in a megacity’s bird soundscape, prepared for Communications Earth & Environment. Includes Supplementary Information, Supplementary Data 1–17, Supplementary Figures 1–10, R and Stan code, and public summary data. Exact coordinates and restricted source data are excluded.",
   "creators": [
     {"name": "Chen, Yuhao"},
     {"name": "Hao, Zezhou"},
@@ -10,6 +10,7 @@
     {"name": "Chen, Zihao"},
     {"name": "Fang, Wenqiang"},
     {"name": "Zhang, Lyu Bing"},
+    {"name": "Liang, Wei"},
     {"name": "Zhou, Ting"},
     {"name": "Liu, Yang"}
   ],

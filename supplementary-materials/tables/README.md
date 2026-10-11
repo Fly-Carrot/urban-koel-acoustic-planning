@@ -1,6 +1,6 @@
-# Supplementary tables
+# Supplementary Data 1–17
 
-Each table is provided as an independent Excel workbook. Short two-digit filenames preserve manuscript order; this index supplies the full title and Supplementary Methods section for every file.
+Each data file is an independent Excel workbook. Stable filenames are retained: `Table_S01.xlsx` is Supplementary Data 1. Internal worksheet names and table-part labels are unchanged. This index supplies each full title and Supplementary Methods section.
 
 | Table | Title | Section | File |
 |---|---|---|---|

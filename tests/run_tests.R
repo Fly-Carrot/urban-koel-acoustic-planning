@@ -9,6 +9,21 @@ code_files <- c(
 )
 invisible(lapply(code_files, parse))
 
+source(file.path(root, "R", "occupancy_models.R"))
+source(file.path(root, "R", "calling_density.R"))
+full <- full_mcmc_settings()
+validation <- full_mcmc_settings("validation")
+detection <- full_mcmc_settings("detection")
+assert_release(full$n.batch * full$batch.length == 30000L && full$n.burn == 10000L,
+               "Full-data sampling profile changed.")
+assert_release(validation$n.batch * validation$batch.length == 60000L && validation$n.burn == 20000L,
+               "Whole-station sampling profile changed.")
+assert_release(detection$n.batch * detection$batch.length == 50000L && detection$n.burn == 20000L,
+               "Detection sampling profile changed.")
+assert_release(identical(stan_sampling_settings("daily")$iter_sampling, 750L) &&
+                 identical(stan_sampling_settings("hourly")$iter_sampling, 1000L),
+               "Stan sampling profiles changed.")
+
 if (requireNamespace("data.table", quietly = TRUE)) {
   source(file.path(root, "R", "analysis_io.R"))
   source(file.path(root, "R", "survey_histories.R"))

@@ -49,7 +49,7 @@ scale_fold_covariates <- function(train, test, occurrence_terms, detection_terms
 }
 
 score_heldout_history <- function(fit, test, occurrence_formula, detection_formula,
-                                  posterior_draws = 300L, random_effect_draws = 50L,
+                                  posterior_draws = 500L, random_effect_draws = 50L,
                                   seed = 1L) {
   x_occ <- tpg_design(test, occurrence_formula, "occ")
   x_det_all <- tpg_design(test, detection_formula, "det")
@@ -169,7 +169,7 @@ run_transfer_validation <- function(M = 3L) {
       h0 <- fit_tpg_model(
         train, koel_no_host_formula(), primary_detection_formula(),
         2026082000L + scale_m * 10L + fold_id,
-        verbose = FALSE
+        verbose = FALSE, settings = full_mcmc_settings("validation")
       )
       h0_scores <- score_heldout_history(
         h0, test, koel_no_host_formula(), primary_detection_formula(),
@@ -207,7 +207,7 @@ run_transfer_validation <- function(M = 3L) {
         host_fits[[role]] <- fit_tpg_model(
           host_train, host_formulas()[[role]], primary_detection_formula(),
           2026082200L + scale_m * 100L + fold_id * 10L + match(role, names(host_formulas())),
-          verbose = FALSE
+          verbose = FALSE, settings = full_mcmc_settings("validation")
         )
       }
       draw_schedule <- chain_stratified_host_draws(
@@ -240,7 +240,7 @@ run_transfer_validation <- function(M = 3L) {
         h4 <- fit_tpg_model(
           train_m, koel_three_host_formula(), primary_detection_formula(),
           2026082300L + scale_m * 100L + fold_id * 10L + m,
-          verbose = FALSE
+          verbose = FALSE, settings = full_mcmc_settings("validation")
         )
         scores <- score_heldout_history(
           h4, test_m, koel_three_host_formula(), primary_detection_formula(),

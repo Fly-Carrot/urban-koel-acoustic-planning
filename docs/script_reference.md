@@ -1,6 +1,6 @@
 # Script reference
 
-The scripts run in manuscript order. `verify` checks the published summaries; `full` runs the corresponding analysis with approved model-ready inputs.
+The scripts run in manuscript order. `verify` checks the published summaries; `full` implements the selected workflow with approved model-ready inputs. See [analysis_coverage.md](analysis_coverage.md) for differences from the archived analysis, and [mcmc_settings.md](mcmc_settings.md) for the retained sampling settings.
 
 ## `00_preflight`
 

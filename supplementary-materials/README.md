@@ -1,14 +1,14 @@
 # Manuscript supplementary materials
 
-This directory contains the submission-facing supplementary materials for the manuscript *Where wildlife is heard: AI-powered mapping of bird acoustic activity for adaptive monitoring and urban planning*.
+This directory contains public copies of the supplementary materials for *Urban planning leaves an audible legacy in a megacity’s bird soundscape*, prepared for *Communications Earth & Environment*.
 
 The materials are organised as four parallel collections so that readers can open the complete supplement or retrieve an individual table, figure or verification record.
 
 | Collection | Contents | Entry point |
 |---|---|---|
 | Supplementary Information | Complete Supplementary Methods and captions | [`Supplementary_Information.pdf`](supplementary-information/Supplementary_Information.pdf) |
-| Supplementary tables | Seventeen independently downloadable Excel workbooks | [`tables/`](tables/) |
-| Supplementary figures | Ten publication-quality PDFs and lightweight PNG previews | [`figures/`](figures/) |
+| Supplementary Data 1–17 | Seventeen independently downloadable Excel workbooks | [`tables/`](tables/) |
+| Supplementary Figs. 1–10 | Ten publication-quality PDFs and lightweight PNG previews | [`figures/`](figures/) |
 | Manifests | Machine-readable inventory and SHA-256 checksums | [`manifests/`](manifests/) |
 
 ## Link to the analytical workflow
@@ -31,7 +31,7 @@ The supplementary sections follow the manuscript workflow:
 
 The public copies preserve manuscript-facing summaries while protecting recorder security, site privacy and third-party licences. Exact recorder coordinates, exact candidate-HEX identifiers, granular points of interest, raw audio, model weights and third-party source rasters are not redistributed. Public station summaries use anonymised codes `ST01`-`ST31`; monitoring candidates use route-specific ranks `L1`-`L15` and `V1`-`V15`. Figure S1 retains map-scale station context required to understand the validation design, without distributing coordinate records.
 
-The PDF and individual files contain the same scientific results. Individual attachments use stable short manuscript identifiers (`Table_S01.xlsx`, `Figure_S01.pdf`); the table and figure indexes provide their full titles, and [`manifests/supplementary_artifacts.csv`](manifests/supplementary_artifacts.csv) preserves the mapping to private production filenames and provenance.
+The PDF and individual files contain the same scientific results. Stable filenames are retained: `Table_S01.xlsx` corresponds to Supplementary Data 1, and `Figure_S01.pdf` corresponds to Supplementary Fig. 1. Workbook sheet names and internal table-part labels are unchanged. The indexes provide full titles, and [`manifests/supplementary_artifacts.csv`](manifests/supplementary_artifacts.csv) records filenames and provenance. The public Information PDF clarifies stage-specific sampling settings and public access limits; it does not redistribute the submission manuscript.
 
 ## Licensing
 

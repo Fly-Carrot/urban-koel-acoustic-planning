@@ -22,7 +22,7 @@ predict_host_surface <- function(fit, draw_index, formula, grid, centre, scale) 
   (raw - centre) / scale
 }
 
-run_city_prediction <- function(n_draws = 300L) {
+run_city_prediction <- function(n_draws = 600L, n_exposure_draws = 300L) {
   require_package("data.table")
   city <- read_table(full_asset("city_predictors_250"), c("cell_id"))
   grid <- city_week_grid(city)
@@ -62,8 +62,14 @@ run_city_prediction <- function(n_draws = 300L) {
   reference_path <- full_asset("reference_detection_density_draws", required = FALSE)
   if (!is.null(reference_path)) {
     reference <- read_table(reference_path, c("p", "mu_plus"))
-    index <- rep(seq_len(nrow(reference)), length.out = ncol(draws))
-    exposure <- sweep(draws, 2, reference$p[index] * reference$mu_plus[index], "*")
+    # Retain equal contributions from the three host imputations.
+    draw_groups <- rep(seq_len(M), times = vapply(predicted, ncol, integer(1)))[seq_len(ncol(draws))]
+    per_group <- max(1L, floor(n_exposure_draws / M))
+    exposure_keep <- unlist(lapply(split(seq_len(ncol(draws)), draw_groups), function(g) {
+      g[unique(as.integer(round(seq(1, length(g), length.out = min(per_group, length(g))))))]
+    }), use.names = FALSE)
+    index <- rep(seq_len(nrow(reference)), length.out = length(exposure_keep))
+    exposure <- sweep(draws[, exposure_keep, drop = FALSE], 2, reference$p[index] * reference$mu_plus[index], "*")
     summary[, `:=`(
       exposure_mean = rowMeans(exposure),
       exposure_q025 = apply(exposure, 1, stats::quantile, 0.025),

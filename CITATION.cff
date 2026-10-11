@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use these supplementary materials, please cite the associated manuscript and this repository release."
 type: software
-title: "Supplementary code and data for: Where wildlife is heard: AI-powered mapping of bird acoustic activity for adaptive monitoring and urban planning"
+title: "Supplementary materials for: Urban planning leaves an audible legacy in a megacity’s bird soundscape"
 version: 0.1.0
 date-released: 2026-08-14
 repository-code: "https://github.com/Fly-Carrot/urban-koel-acoustic-planning"
@@ -22,6 +22,8 @@ authors:
     family-names: Fang
   - given-names: Lyu Bing
     family-names: Zhang
+  - given-names: Wei
+    family-names: Liang
   - given-names: Ting
     family-names: Zhou
   - given-names: Yang

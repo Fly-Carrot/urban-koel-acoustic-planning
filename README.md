@@ -1,8 +1,8 @@
 # Supplementary materials and analysis code
 
-This repository accompanies the manuscript *Where wildlife is heard: AI-powered mapping of bird acoustic activity for adaptive monitoring and urban planning*, prepared for *Landscape and Urban Planning*.
+This repository accompanies the manuscript *Urban planning leaves an audible legacy in a megacity’s bird soundscape*, prepared for *Communications Earth & Environment*.
 
-It contains the Supplementary Information, individual tables and figures, the statistical models, and the R code used to move from acoustic detections to citywide prediction and monitoring design.
+It contains the Supplementary Information, individual data files and figures, statistical models, and a readable R implementation of the main analysis steps.
 
 [![checks](https://github.com/Fly-Carrot/urban-koel-acoustic-planning/actions/workflows/contract.yml/badge.svg)](https://github.com/Fly-Carrot/urban-koel-acoustic-planning/actions/workflows/contract.yml)
 [![verify](https://github.com/Fly-Carrot/urban-koel-acoustic-planning/actions/workflows/verify.yml/badge.svg)](https://github.com/Fly-Carrot/urban-koel-acoustic-planning/actions/workflows/verify.yml)
@@ -62,20 +62,20 @@ Researchers with approved model-ready inputs can copy [`config/full_data_manifes
 make full
 ```
 
-The full route requires R packages listed in [`docs/system_requirements.md`](docs/system_requirements.md). Data fields and access limits are described in [`docs/data_access.md`](docs/data_access.md).
+The full route requires R packages listed in [`docs/system_requirements.md`](docs/system_requirements.md). Data fields and access limits are described in [`docs/data_access.md`](docs/data_access.md). Stage-specific sampling settings are listed in [`docs/mcmc_settings.md`](docs/mcmc_settings.md).
 
 ## Supplementary files
 
 | Material | Link |
 |---|---|
 | Complete Supplementary Information | [PDF](supplementary-materials/supplementary-information/Supplementary_Information.pdf) |
-| Tables S1-S17 | [tables](supplementary-materials/tables/) |
-| Figures S1-S10 | [figures](supplementary-materials/figures/) |
+| Supplementary Data 1–17 | [data files](supplementary-materials/tables/) |
+| Supplementary Figs. 1–10 | [figures](supplementary-materials/figures/) |
 | Checksums and inventories | [manifests](supplementary-materials/manifests/) |
 
 ## Scope
 
-The public `verify` route rebuilds reported summaries from non-sensitive processed products. The `full` route contains the data preparation, model fitting, whole-station validation, city prediction and monitoring-design code, but needs restricted model-ready inputs supplied by the user.
+The public `verify` route rebuilds reported summaries from non-sensitive processed products. The `full` route needs approved model-ready inputs and does not yet reproduce every archived scoring and prediction step exactly. See [`docs/analysis_coverage.md`](docs/analysis_coverage.md) for the remaining differences.
 
 Potential-host acoustic opportunity is predictive context and does not establish local parasitism. Mapped acoustic activity does not measure abundance, human presence or annoyance. PID and AOA describe prediction support; they do not alter prediction values.
 

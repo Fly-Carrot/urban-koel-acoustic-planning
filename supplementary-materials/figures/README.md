@@ -1,6 +1,6 @@
-# Supplementary figures
+# Supplementary Figs. 1–10
 
-Publication-quality PDF files are the canonical figures. The `previews/` directory provides first-page PNG previews for browsing on GitHub. PDF and preview files use the same short manuscript identifier; this index supplies their full titles and sections.
+PDF files are the canonical figures. The `previews/` directory provides first-page PNG previews for browsing on GitHub. `Figure_S01.pdf` is Supplementary Fig. 1. Panels use lowercase letters; this index supplies full titles and sections.
 
 | Figure | Title | Section | PDF | Preview |
 |---|---|---|---|---|

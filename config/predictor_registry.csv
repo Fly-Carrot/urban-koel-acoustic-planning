@@ -1,5 +1,5 @@
 public_name,source_family,likelihood_layer,transformation,spatial_support,scaling,public_boundary
-recording_effort,scheduled sampled minutes,daily_detectability,log then z score,survey day,training-fold only,No missing-effort day becomes a non-detection
+recording_effort,recorded sampled minutes,daily_detectability,log1p(minutes / 60) then z score,survey day,training-fold only,No missing-effort day becomes a non-detection
 anthropogenic_event_rate,AI-labelled acoustic events,daily_detectability,log1p then z score,survey day,training-fold only,Car horn human knocking voice and music events per recording hour
 frog_event_rate,AI-labelled acoustic events,daily_detectability,log1p then z score,survey day,training-fold only,Observation context rather than habitat
 tree_cover,Dynamic World V1,weekly_opportunity,z score,station-centred circular neighbourhood,training-fold only,100 250 and 500 m compared

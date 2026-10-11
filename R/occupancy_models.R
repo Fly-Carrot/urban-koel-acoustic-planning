@@ -19,11 +19,14 @@ host_formulas <- function() {
   )
 }
 
-full_mcmc_settings <- function() {
+full_mcmc_settings <- function(profile = c("full_data", "detection", "validation")) {
+  profile <- match.arg(profile)
+  batches <- c(full_data = 600L, detection = 1000L, validation = 1200L)
+  burn <- c(full_data = 10000L, detection = 20000L, validation = 20000L)
   list(
-    n.batch = 600L,
+    n.batch = unname(batches[[profile]]),
     batch.length = 50L,
-    n.burn = 10000L,
+    n.burn = unname(burn[[profile]]),
     n.thin = 20L,
     n.chains = 4L
   )
@@ -56,9 +59,9 @@ tpg_design <- function(data, formula, layer) {
   stats::model.matrix(fixed_formula, data = flat)
 }
 
-fit_tpg_model <- function(data, occurrence_formula, detection_formula, seed, verbose = TRUE) {
+fit_tpg_model <- function(data, occurrence_formula, detection_formula, seed,
+                          verbose = TRUE, settings = full_mcmc_settings()) {
   require_package("spOccupancy")
-  settings <- full_mcmc_settings()
   x_occ <- tpg_design(data, occurrence_formula, "occ")
   x_det <- tpg_design(data, detection_formula, "det")
   z_init <- apply(data$y, c(1, 2), function(x) as.integer(any(x == 1L, na.rm = TRUE)))
@@ -143,7 +146,8 @@ run_detection_models <- function() {
   scores <- list()
   for (i in seq_along(candidates)) {
     model_id <- names(candidates)[[i]]
-    fit <- fit_tpg_model(data, occ_formula, candidates[[i]], 2026081400L + i)
+    fit <- fit_tpg_model(data, occ_formula, candidates[[i]], 2026081400L + i,
+                         settings = full_mcmc_settings("detection"))
     saveRDS(fit, file.path(out, paste0(model_id, ".rds")))
     scores[[i]] <- cbind(
       psis_summary(fit, data, model_id),
@@ -166,7 +170,10 @@ run_host_models <- function() {
   for (i in seq_along(formulas)) {
     role <- names(formulas)[[i]]
     data <- read_model_inputs(response_names[[role]])
-    fit <- fit_tpg_model(data, formulas[[role]], primary_detection_formula(), 2026081500L + i)
+    # The retained sturnid refit used the longer profile.
+    profile <- if (role == "sturnid") "validation" else "full_data"
+    fit <- fit_tpg_model(data, formulas[[role]], primary_detection_formula(), 2026081500L + i,
+                         settings = full_mcmc_settings(profile))
     fits[[role]] <- fit
     saveRDS(fit, file.path(out, paste0(role, ".rds")))
     summaries[[role]] <- cbind(

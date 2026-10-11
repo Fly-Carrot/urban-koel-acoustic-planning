@@ -83,7 +83,7 @@ make_tpg_data <- function(daily, weekly_covariates, detection_covariates, respon
   )
   data.table::setorder(det, station_id, study_week, survey_day)
   if (!"log_effort_z" %in% names(det)) {
-    scaled_effort <- z_scale(log(pmax(det$usable_minutes, 1)))
+    scaled_effort <- z_scale(log1p(det$usable_minutes / 60))
     det[, log_effort_z := scaled_effort$value]
   }
   det[, site_re := match(station_id, sites)]
