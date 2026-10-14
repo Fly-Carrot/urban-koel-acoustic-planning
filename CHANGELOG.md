@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-15
+
+- Aligned dated fitting terms, PID/AOA classes, sequential monitoring rules and dawn summaries with the retained analysis.
+- Added actual de-identified model inputs, fixed folds and selected posterior draws, plus model-refit and retained-result calculation scripts.
+- Updated all SA supplementary materials, main figures and Table 1. Removed private coordinate records/IDs and personal file metadata from public copies.
+- Verified input round trips, complete city predictions, planning summaries and both monitoring sequences. Full historical MCMC searches and geometry-dependent diagnostics were not rerun.
+
 ## 2026-10-14
 
 - Shortened the repository introduction and linked directly to the modelling functions.

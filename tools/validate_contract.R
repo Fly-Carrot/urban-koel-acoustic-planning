@@ -15,7 +15,7 @@ assert_release(identical(sort(expected_drivers), actual_drivers),
 
 git_available <- nzchar(Sys.which("git")) && dir.exists(file.path(root, ".git"))
 if (git_available) {
-  relative_files <- system2("git", c("-C", root, "ls-files"), stdout = TRUE)
+  relative_files <- system2("git", c("-C", root, "ls-files", "--cached", "--others", "--exclude-standard"), stdout = TRUE)
   relative_files <- relative_files[nzchar(relative_files)]
 } else {
   absolute_files <- list.files(root, recursive = TRUE, all.files = TRUE, full.names = TRUE,
@@ -24,6 +24,7 @@ if (git_available) {
   relative_files <- relative_files[!grepl("^(\\.git/|outputs/)", relative_files)]
 }
 relative_files <- sort(unique(relative_files))
+relative_files <- relative_files[file.exists(file.path(root,relative_files))]
 absolute_files <- file.path(root, relative_files)
 assert_release(length(relative_files) > 0L, "No release files were found.")
 assert_release(!any(file.info(absolute_files)$isdir), "Directory entries entered the file contract.")
@@ -37,7 +38,10 @@ allowed_supplementary_binaries <- c(
   "supplementary-materials/supplementary-information/Supplementary_Information.pdf",
   file.path("supplementary-materials", "tables", sprintf("Table_S%02d.xlsx", 1:17)),
   file.path("supplementary-materials", "figures", sprintf("Figure_S%02d.pdf", 1:10)),
-  file.path("supplementary-materials", "figures", "previews", sprintf("Figure_S%02d.png", 1:10))
+  file.path("supplementary-materials", "figures", "previews", sprintf("Figure_S%02d.png", 1:10)),
+  file.path("supplementary-materials", "main-figures", sprintf("Figure_%d.pdf",1:4)),
+  file.path("supplementary-materials", "main-figures", "previews", sprintf("Figure_%d.png",1:4)),
+  file.path("supplementary-materials", "main-tables", c("Table_1.pdf","Table_1.xlsx"))
 )
 tracked_binaries <- relative_files[grepl(binary_extensions, relative_files, ignore.case = TRUE)]
 assert_release(setequal(tracked_binaries, allowed_supplementary_binaries),
@@ -49,7 +53,7 @@ text_extensions <- "\\.(R|py|md|csv|tsv|yml|yaml|json|cff|txt|stan|svg|lock|giti
 text_files <- relative_files[grepl(text_extensions, relative_files, ignore.case = TRUE) |
                                basename(relative_files) %in% c("Makefile", "LICENSE", ".gitignore")]
 # This scanner necessarily contains the patterns it searches for; exclude only its own source.
-scan_files <- setdiff(text_files, c("tools/validate_contract.R", "tools/validate_supplementary_assets.py"))
+scan_files <- setdiff(text_files, c("tools/validate_contract.R", "tools/validate_supplementary_assets.py", "tools/validate_model_inputs.py"))
 read_text <- function(path) paste(readLines(file.path(root, path), warn = FALSE, encoding = "UTF-8"), collapse = "\n")
 texts <- setNames(lapply(scan_files, read_text), scan_files)
 has_match <- function(pattern, perl = TRUE, ignore.case = FALSE) {
@@ -141,7 +145,11 @@ if (!identical(supplementary_status, 0L)) {
 }
 cat(readLines(supplementary_log, warn = FALSE), sep = "\n")
 
+input_status <- system2("python3", "tools/validate_model_inputs.py")
+assert_release(identical(input_status,0L),"Released model-input validation failed.")
+docs_status <- system2("python3", "tools/validate_docs.py")
+assert_release(identical(docs_status,0L),"Documentation links failed.")
 cat(sprintf(
-  "Release contract PASS: %d tracked files, 14 drivers, 11 checksummed reference products and 38 supplementary assets; no exact-coordinate schema, prohibited payload, local path or credential signature.\n",
+  "Release contract PASS: %d public files, 14 numbered drivers, 11 reference products and 48 material assets; no prohibited coordinate schema, local path or credential signature.\n",
   length(relative_files)
 ))

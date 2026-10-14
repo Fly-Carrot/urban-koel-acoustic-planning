@@ -11,7 +11,7 @@ Public copies accompanying *Urban planning leaves an audible legacy in a megacit
 
 ## Version and numbering
 
-These files are the public export updated on **11 October 2026**, prepared during the Communications Earth & Environment manuscript stage. They have not been replaced with later Science Advances revisions. Figure panels remain lowercase in this export.
+These files are the public export updated on **15 October 2026**, aligned with the current Science Advances submission. Figure panels are uppercase. The four main figures and Table 1 are supplied in parallel folders.
 
 Short filenames are unchanged: `Table_S01.xlsx` is Supplementary Data 1 and `Figure_S01.pdf` is Supplementary Figure 1. Workbook sheet names and internal table-part labels are retained.
 

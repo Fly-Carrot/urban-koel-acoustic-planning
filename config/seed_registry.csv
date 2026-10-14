@@ -1,5 +1,5 @@
 operation,seed,scope
-whole_station_fold_registry,20260724,Frozen fivefold station assignment; assignment itself withheld with exact site information
+whole_station_fold_registry,20260724,Frozen fivefold station assignment; de-identified assignment in data/model-inputs/folds.csv; exact positions withheld
 residual_moran_permutations,20270829_to_20271276,Scale and model specific deterministic seeds recorded in the internal audit
-posterior_planning_summary,20260727,Three hundred posterior draws for aggregate planning summaries
+posterior_planning_summary,475027_plus_100_plus_imputation,Retained daily/hourly posterior-row and day-effect schedule; 100 draws per host imputation
 public_synthetic_example,20260814,Deterministic example data only

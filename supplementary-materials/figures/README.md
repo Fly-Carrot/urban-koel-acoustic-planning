@@ -1,6 +1,6 @@
 # Supplementary Figs. 1–10
 
-PDFs and PNG previews are the public export updated on 11 October 2026. `Figure_S01.pdf` is Supplementary Figure 1. Panels remain lowercase in this version; later manuscript revisions have not been substituted.
+PDFs and PNG previews are the public export updated on 15 October 2026. `Figure_S01.pdf` is Supplementary Figure 1. Panels use uppercase letters and match the current SA files.
 
 | Figure | Title | Section | PDF | Preview |
 |---|---|---|---|---|

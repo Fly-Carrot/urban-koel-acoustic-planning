@@ -58,7 +58,8 @@ tpg_design <- function(data, formula, layer) {
   covariates <- if (layer == "occ") data$occ.covs else data$det.covs
   flat <- flatten_tpg_covariates(covariates, formula, dim(data$y), layer)
   fixed_formula <- reformulas::nobars(formula)
-  stats::model.matrix(fixed_formula, data = flat)
+  frame <- stats::model.frame(fixed_formula, data = flat, na.action = stats::na.pass)
+  stats::model.matrix(fixed_formula, data = frame)
 }
 
 fit_tpg_model <- function(data, occurrence_formula, detection_formula, seed,

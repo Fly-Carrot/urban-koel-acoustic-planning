@@ -4,7 +4,7 @@ model_registry_public.csv,Detection model,02_select_detection_backbone,daily_det
 predictor_registry_public.csv,Environmental predictors,03_build_environmental_predictors,weekly and city predictor tables,No raster pixels or geometry
 host_groups.csv,Potential-host models,04_fit_potential_host_opportunity,host acoustic histories,No event-level records
 model_effects.csv,Koel and calling-density models,05_fit_koel_weekly_opportunity and 07_fit_joint_calling_density,posterior model draws,Coefficient summaries only
-transfer_validation.csv,Whole-station validation,06_validate_scale_and_transfer,fold_registry and fold predictions,No station-level scores or fold membership
+transfer_validation.csv,Whole-station validation,06_validate_scale_and_transfer,fold_registry and fold predictions,De-identified fold membership supplied separately; no exact coordinates
 weekly_acoustic_opportunity.csv,City prediction,08_predict_citywide_activity,city cell-week posterior draws,Weekly aggregate curve without geometry
 weekly_acoustic_exposure.csv,Acoustic exposure,08_predict_citywide_activity,aligned psi p and mu_plus draws,Weekly aggregate curve without geometry
 prediction_support_classes.csv,PID and AOA,09_classify_prediction_support,land cover and predictor distance,Class totals without cell identifiers

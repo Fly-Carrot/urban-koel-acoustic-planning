@@ -15,11 +15,11 @@ source(file.path("R", "monitoring_design.R"))
 check_full_inputs <- function() {
   manifest <- read_full_manifest()
   required <- c(
-    "survey_effort", "acoustic_detections", "weekly_covariates",
+    "survey_effort", "acoustic_detections", "date_week_registry", "weekly_covariates",
     "weekly_covariates_100", "weekly_covariates_250", "weekly_covariates_500",
     "daily_detection_covariates", "fold_registry", "joint_daily_data",
     "hourly_calling_counts", "host_density_scaling", "training_predictors_250", "city_predictors_250",
-    "planning_sensitive_points", "urban_function_overlap", "monitoring_candidates"
+    "planning_sensitive_points", "urban_function_overlap", "monitoring_candidates", "spacing_conflicts", "monitoring_settings"
   )
   missing <- setdiff(required, manifest$asset_id)
   if (length(missing)) stop("Full-data manifest is missing: ", paste(missing, collapse = ", "), call. = FALSE)

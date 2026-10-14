@@ -8,7 +8,7 @@ The source rasters, raw OpenStreetMap records, AI model weights and acoustic rec
 | JRC Global Surface Water v1.4 | nearest-water context | No source raster | Copernicus free and open access terms; [Earth Engine catalogue](https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_Metadata) |
 | NASA SRTMGL1 v3 | elevation | No source raster | NASA Earth Science Data and Information Policy; [Earthdata record](https://www.earthdata.nasa.gov/data/catalog/lpcloud-srtmgl1-003) |
 | ESA WorldCover 2021 v200 | categorical permanent-water exclusion | No source raster | CC BY 4.0; [ESA WorldCover data access](https://esa-worldcover.org/en/data-access) |
-| OpenStreetMap | POI and urban-function source records | No granular records or derived database | ODbL 1.0; © OpenStreetMap contributors; [copyright and licence](https://www.openstreetmap.org/copyright) |
+| OpenStreetMap | Road predictors, POI and urban-function source records | Geometry-free derived planning weights only, under ODbL 1.0 | ODbL 1.0; © OpenStreetMap contributors; [copyright and licence](https://www.openstreetmap.org/copyright) |
 | AudioMoth | acoustic acquisition hardware | Not applicable | Open hardware documentation; [Open Acoustic Devices](https://www.openacousticdevices.info/audiomoth) |
 | BirdNET v2.4 | locally adapted species classification | No code or model weights | Analyzer code and model assets have different terms; model weights are CC BY-NC-SA 4.0; [BirdNET-Analyzer](https://github.com/birdnet-team/BirdNET-Analyzer) |
 

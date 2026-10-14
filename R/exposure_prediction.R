@@ -46,6 +46,15 @@ conditional_hour_fraction <- function(eta, phi, samples_per_hour = 6L) {
   pmin(1, rowMeans(mu / pmax(positive_day, 1e-12)))
 }
 
+conditional_window_metrics <- function(eta, phi, hours = 5:8, samples_per_hour = 6L) {
+  mu <- matrix(stats::plogis(pmax(-30, pmin(30, as.numeric(eta)))), nrow(eta), ncol(eta))
+  log_p0 <- matrix(lbeta(mu * phi, samples_per_hour + (1 - mu) * phi) -
+                    lbeta(mu * phi, (1 - mu) * phi), nrow(eta), ncol(eta))
+  positive_day <- pmax(-expm1(rowSums(log_p0)), 1e-12)
+  list(expected = rowSums(samples_per_hour * mu[, hours, drop = FALSE]) / positive_day,
+       probability = pmin(1, -expm1(rowSums(log_p0[, hours, drop = FALSE])) / positive_day))
+}
+
 predict_modular_exposure <- function(grid, equal_host_z, joint, hourly, n_draws = 100L,
                                      imputation = 1L, chunk_size = 200L) {
   joint_draws <- joint$draws[posterior_rows(nrow(joint$draws), n_draws), , drop = FALSE]

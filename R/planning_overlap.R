@@ -20,6 +20,12 @@ posterior_group_summary <- function(draws, row_index, weight) {
 }
 
 run_planning_overlap <- function() {
+  # New-data weekly overlaps stay separate from the retained joint-model
+  # dawn calculations in analysis/reproduce_retained.R.
+  summarise_new_weekly_overlap()
+}
+
+summarise_new_weekly_overlap <- function() {
   require_package("data.table")
   prediction <- read_table(
     file.path(full_output_dir("08_city_prediction"), "city_week_predictions.csv"),

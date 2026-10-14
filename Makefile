@@ -1,7 +1,7 @@
 R := Rscript --vanilla
 PROFILE ?= verify
 
-.PHONY: setup smoke verify full test contract clean
+.PHONY: setup smoke verify full reproduce test contract clean
 
 setup:
 	$(R) tools/setup.R
@@ -14,6 +14,9 @@ verify:
 
 full:
 	$(R) tools/run_pipeline.R --profile=full
+
+reproduce:
+	$(R) analysis/reproduce_retained.R
 
 test:
 	$(R) tests/run_tests.R

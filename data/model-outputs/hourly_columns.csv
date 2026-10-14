@@ -1,0 +1,8 @@
+column,term
+1,"(Intercept)"
+2,"sin_week"
+3,"cos_week"
+4,"sin_hour_1"
+5,"cos_hour_1"
+6,"sin_hour_2"
+7,"cos_hour_2"

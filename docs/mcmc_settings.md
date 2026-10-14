@@ -13,4 +13,4 @@ Settings follow Supplementary Data 17, Table S17B. Occupancy iterations are coun
 
 The daily host-informed Stan model uses four chains with 750 warm-up and 750 sampling iterations per chain. Hourly models use four chains with 1,000 warm-up and 1,000 sampling iterations. Both use `adapt_delta = 0.95` and `max_treedepth = 12`.
 
-The public scripts set seeds for a fresh run. Published estimates are retained in `data/processed/reference/`; see [code coverage](analysis_coverage.md) for differences between the public functions and the study analysis.
+The retained-input entry uses verified study seeds in the compressed inputs, plus the recorded daily/hourly schedules. The new-dataset route uses its own deterministic seeds. Published estimates remain in `data/processed/reference/`; see [code coverage](analysis_coverage.md) for the parts not refitted here.

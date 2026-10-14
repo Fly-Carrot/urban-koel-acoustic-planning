@@ -3,4 +3,4 @@
 "coordinate_trend_minus_coordinate_free_three_host","delta_held_site_ELPD",15.3934064592185,9.47807288666326,-3.18361639864148,33.9704293170785,31,,,,,,"retain coordinate-free model by parsimony"
 "100m_minus_250m","delta_held_site_ELPD",-5.92653490991764,3.79965205072753,-13.3738529293436,1.52078310950832,31,,,,,,"no clear scale replacement"
 "500m_minus_250m","delta_held_site_ELPD",-1.41210532141866,2.97252487116262,-7.2382540688974,4.41404342606007,31,,,,,,"no clear scale replacement"
-"three_host_coordinate_free_held_site_performance","held_site_ELPD",-3577.32083209087,,,,31,0.154722597321073,0.122890655109158,0.802927635562865,0.0251094150753457,0.9342,"article ecological-planning primary"
+"three_host_coordinate_free_held_site_performance","held_site_ELPD",-3577.32083209087,,,,31,0.154722597321073,0.122890655109158,0.802927635562865,0.0251094150753457,0.987,"article ecological-planning primary"

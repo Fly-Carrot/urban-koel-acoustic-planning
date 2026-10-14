@@ -6,5 +6,7 @@
 
 [manifests/](manifests/) records each summary file and its checksum.
 
-See [data access](../docs/data_access.md) for missing inputs and [field descriptions](../docs/data_dictionary.md) for definitions.
+[model-inputs/](model-inputs/README.md) contains actual de-identified study inputs; [model-outputs/](model-outputs/README.md) contains selected retained coefficient draws and reference summaries.
+
+See [data access](../docs/data_access.md) for sharing limits and [field descriptions](../docs/data_dictionary.md) for definitions.
 

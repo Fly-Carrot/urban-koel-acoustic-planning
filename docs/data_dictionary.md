@@ -8,7 +8,7 @@
 | `model_registry_public.csv` | model component | formula and role | public names and selected formulas |
 | `predictor_registry_public.csv` | predictor | likelihood layer and support | ecological, observation and reporting definitions |
 | `host_groups.csv` | species | group and scientific name | exact membership of three potential-host responses |
-| `model_effects.csv` | coefficient | median and 95% CrI | reported `psi`, `p` and `mu_plus` effects |
+| `model_effects.csv` | coefficient | median and 95% CrI | reported opportunity, detectability and underlying density-predictor effects |
 | `transfer_validation.csv` | comparison | estimate, interval and diagnostics | held-station and multiscale evidence |
 | `weekly_acoustic_opportunity.csv` | annual week | spatial quantiles and mean | `psi` across the centroid-in-city mapping subset |
 | `weekly_acoustic_exposure.csv` | annual week | spatial quantiles and mean | all-day `E` across the same subset |
@@ -31,7 +31,9 @@
 
 Percent columns are stored on a 0–100 scale; probability columns are stored on a 0–1 scale. Missing values are empty CSV fields, never coded as zero.
 
-The public predictor summary retains an older effort description. For the fitted transformation, refer to `config/predictor_registry.csv` and `R/survey_histories.R`: standardised `log1p(recorded sampled minutes / 60)`. See [code coverage](analysis_coverage.md).
+Effort is standardised `log1p(recorded sampled minutes / 60)`. Density coefficients enter `logit(mu)`; `mu_plus` is derived by positive-day conditioning. The compressed study inputs retain fitted scales. Study weeks index 68 dated intervals, not ISO weeks.
+
+In `model_effects.csv`, the legacy component name `positive_day_minute_probability` identifies the density branch; its coefficients are on the underlying `logit(mu)` scale, not a separate regression for derived `mu_plus`.
 
 ## Model-ready inputs for `make full`
 
@@ -49,6 +51,6 @@ The public predictor summary retains an older effort description. For the fitted
 | `city_predictors_250` | cell ID, seven predictors, dominant land cover and permanent-water flag |
 | `planning_sensitive_points` | `cell_id`, `context_class` |
 | `urban_function_overlap` | `cell_id`, `context_class`, `overlap_area_m2` |
-| `monitoring_candidates` | private candidate ID, projected coordinates and seven predictors |
+| `monitoring_candidates` | cell_id, existing_site, nearest_existing_site_m, planning_context, uncertainty_width; city predictors and spacing-conflict pairs supplied separately |
 
 The seven environmental predictors are `trees`, `built`, `grass`, `road_density`, `tree_edge_area_50m`, `dist_water_m_nearest` and `elevation`. Exact geometry stays outside the public repository.

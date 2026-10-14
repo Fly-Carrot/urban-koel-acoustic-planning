@@ -2,36 +2,36 @@
 
 Accompanying materials for *Urban planning leaves an audible legacy in a megacity’s bird soundscape*.
 
-## Supplementary materials
+## Materials
 
 | Material | Open |
 |---|---|
 | Supplementary Methods S1–S9 and captions | [Complete PDF](supplementary-materials/supplementary-information/Supplementary_Information.pdf) |
 | Supplementary Data 1–17 | [Excel files and titles](supplementary-materials/tables/README.md) |
 | Supplementary Figures 1–10 | [PDFs and previews](supplementary-materials/figures/README.md) |
-| Reported numerical summaries | [CSV files](data/processed/reference/) · [field descriptions](docs/data_dictionary.md) |
+| Main figures and Table 1 | [Figures](supplementary-materials/main-figures/README.md) · [Table](supplementary-materials/main-tables/README.md) |
+| Model-ready study inputs | [Data and field notes](data/model-inputs/README.md) |
+| Selected posterior draws and reported summaries | [Draws](data/model-outputs/README.md) · [Summary CSVs](data/processed/reference/) |
 
-The supplementary files are the public export updated on **11 October 2026**. They retain the numbering and lowercase figure panels of that version. Later manuscript revisions are not included in these files.
+Updated **15 October 2026** to match the current Science Advances submission files. Figure panels use uppercase letters. Public copies omit precise coordinates and private station/candidate identifiers; workbook sheet names and numerical results are retained.
 
-## Analysis code
+## Analysis
 
-The numbered files in [analysis/](analysis/) run each step. The calculations are in [R/](R/); the calling-density models are in [stan/](stan/).
+The numbered files in [analysis/](analysis/) follow the paper. Functions in [R/](R/) perform the calculations; [stan/](stan/) contains the calling-density models.
 
-| Step | Main code |
+| Step | Code |
 |---|---|
-| Join recording effort and detections | [Survey histories](R/survey_histories.R) |
-| Check environmental predictors | [Environmental predictors](R/environmental_predictors.R) |
-| Fit detection, host and Koel opportunity models | [Occupancy models](R/occupancy_models.R) |
-| Test predictions at withheld stations | [Transfer validation](R/transfer_validation.R) |
-| Fit daily and hourly calling density | [Calling density](R/calling_density.R) · [Stan models](stan/README.md) |
-| Predict citywide activity and sampled-minute exposure | [City prediction](R/city_prediction.R) · [Exposure](R/exposure_prediction.R) |
-| Classify prediction support | [PID and AOA](R/prediction_support.R) |
-| Summarise planning-sensitive overlaps | [Planning overlap](R/planning_overlap.R) |
-| Rank additional monitoring sites | [Monitoring design](R/monitoring_design.R) |
+| Prepare daily detections and recording effort | [Survey histories](R/survey_histories.R) |
+| Fit detection, host and Koel models | [Occupancy models](R/occupancy_models.R) |
+| Test transfer to withheld stations | [Transfer validation](R/transfer_validation.R) |
+| Fit daily and hourly calling density | [Calling density](R/calling_density.R) |
+| Recalculate city predictions and dawn summaries | [Retained-draw calculations](R/reproduce_study.R) |
+| Identify prediction boundaries | [PID and AOA](R/prediction_support.R) |
+| Select the next monitoring sites | [Monitoring design](R/monitoring_design.R) |
 
-[Methods-to-code map](docs/code_map.md) · [Notes for each script](docs/script_reference.md) · [Model roles](docs/model_registry.md)
+[Methods-to-code map](docs/code_map.md) · [Script notes](docs/script_reference.md) · [Model roles](docs/model_registry.md) · [Verification](docs/verification.md)
 
-## Run the public checks
+## Run
 
 ```bash
 git clone https://github.com/Fly-Carrot/urban-koel-acoustic-planning.git
@@ -39,20 +39,19 @@ cd urban-koel-acoustic-planning
 make setup
 make verify
 make test
+make reproduce
 ```
 
-These commands check the released summaries and example calculations. Results go to `outputs/`; they do not refit the study models.
+`verify` checks reported summaries. `test` checks calculations and released inputs. `reproduce` recalculates citywide weekly predictions, dawn overlap summaries and monitoring sequences from retained draws; it does not run MCMC again.
 
-Model fitting requires additional inputs listed in the [data notes](docs/data_access.md). See [running instructions](docs/reproduce.md) and [current code coverage](docs/analysis_coverage.md) before using `make full`. The public implementation has several differences from the retained study analysis and has not been verified as a complete numerical reproduction.
+To refit a retained model, use `Rscript analysis/fit_released_input.R full_H4_M01` after installing modelling packages. [Running instructions](docs/reproduce.md) describe requirements and the parts not rerun here.
 
-## Data and interpretation
+## Sharing and interpretation
 
-Included data are aggregate summaries and a small synthetic example. Raw recordings, model-ready station-level inputs, exact coordinates and model weights are not included. [Data access](docs/data_access.md) lists the required files; [source notices](THIRD_PARTY_NOTICES.md) list third-party datasets.
+Study inputs use ST01–ST31 and randomly assigned cell codes. Dates and environmental measurements remain real: these are **de-identified data**, not a guarantee against re-identification. Exact positions, private identity maps, raw recordings, AI weights and source rasters are not distributed. [Data access](docs/data_access.md)
 
-Weekly acoustic opportunity, detectability and sampled-minute exposure describe different parts of the recording process. Mapped activity does not measure abundance or perceived disturbance. [Definitions and interpretation](docs/scientific_boundaries.md)
+Acoustic opportunity, detectability and sampled-minute exposure describe different parts of the recording process. They do not measure abundance or residents’ perceived disturbance. [Definitions](docs/scientific_boundaries.md)
 
-## Citation and licence
+Please cite the manuscript and repository commit used. [Citation metadata](CITATION.cff)
 
-Please cite the associated manuscript and identify the repository tag or commit you used. See [citation metadata](CITATION.cff) and [tagged releases](https://github.com/Fly-Carrot/urban-koel-acoustic-planning/releases).
-
-Code: [BSD-3-Clause](LICENSE). Project-owned summary data and supplementary materials: [CC BY 4.0](data/LICENSE.md). Third-party sources retain their own terms.
+Code: [BSD-3-Clause](LICENSE). Project-owned data/materials: [CC BY 4.0](data/LICENSE.md). OSM-derived planning data: ODbL 1.0. [Source notices](THIRD_PARTY_NOTICES.md)

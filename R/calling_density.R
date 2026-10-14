@@ -147,8 +147,8 @@ run_calling_density_models <- function() {
     chain_dir <- file.path(out, paste0("daily_chains_M", m))
     ensure_dir(chain_dir)
     daily_fit <- fit_cmdstan_model(
-      file.path(repo_root(), "stan", "462_joint_occupancy_hurdle_intensity.stan"),
-      daily_data, chain_dir, 2026082501L + m
+      file.path(repo_root(), "stan", "463_joint_intensity_host_season_compare.stan"),
+      daily_data, chain_dir, 464026L + m * 100L + 2L
     )
     bundles[[m]] <- list(
       draws = as.matrix(daily_fit$draws(c("beta_occ", "alpha_det", "gamma_int"), format = "matrix")),
@@ -169,7 +169,7 @@ run_calling_density_models <- function() {
     file.path(repo_root(), "stan", "470_conditional_hourly_density.stan"),
     hourly_data,
     file.path(out, "hourly_chains"),
-    2026082502L,
+    470127L,
     profile = "hourly"
   )
   hourly_fit$save_object(file.path(out, "hourly_density_fit.rds"))

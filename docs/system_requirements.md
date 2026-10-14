@@ -1,24 +1,7 @@
 # System requirements
 
-## Public verification
+Verification: R 4.5+, Python 3.10+, GNU Make, `data.table`, `reformulas`, `jsonlite`, `matrixStats` and `digest`. Python checks use the standard library. `make setup` installs missing verification packages from CRAN.
 
-- R 4.5 or later;
-- GNU Make;
-- `sha256sum`, `shasum` or `openssl`.
+Refitting additionally needs `spOccupancy`, `cmdstanr`, CmdStan, `posterior` and `loo`. Install CmdStan with `cmdstanr::install_cmdstan()` after installing cmdstanr from its official repository. Full fits can take hours.
 
-`make verify` and the summary checks in `make test` use base R. The final-calculation tests also need `data.table` and `reformulas`; otherwise they are explicitly skipped.
-
-## Full analysis
-
-The model-fitting route uses:
-
-- `data.table`;
-- `spOccupancy`;
-- `loo`;
-- `reformulas`;
-- `cmdstanr` and CmdStan;
-- `posterior`.
-
-The modelling functions read environmental and planning tables as CSV files. These model-ready study inputs are not supplied in the current public release. Full MCMC fitting and three-scale cross-validation can take many hours.
-
-`renv.lock` records the R version but currently has an empty package list; it does not pin the complete package environment. Study package versions are listed in Supplementary Data 17. Installing current package versions may produce different results.
+Calculations were checked on macOS/Apple Silicon. [Package versions](../config/package_versions.csv) record tested local versions, not a complete transitive dependency lock. The old empty `renv.lock` was removed to avoid implying it pinned the environment.

@@ -62,6 +62,16 @@ week_terms <- function(week) {
   )
 }
 
+# Fitting uses the actual week-start date, not the display-week number.
+dated_terms <- function(date) {
+  phase <- 2 * pi * (as.integer(format(as.Date(date), "%j")) - 1) / 365.2425
+  data.frame(sin_week = sin(phase), cos_week = cos(phase))
+}
+
+reporting_week <- function(date) {
+  pmin(52L, (as.integer(format(as.Date(date), "%j")) - 1L) %/% 7L + 1L)
+}
+
 z_scale <- function(x, centre = NULL, scale = NULL) {
   if (is.null(centre)) centre <- mean(x, na.rm = TRUE)
   if (is.null(scale)) scale <- stats::sd(x, na.rm = TRUE)

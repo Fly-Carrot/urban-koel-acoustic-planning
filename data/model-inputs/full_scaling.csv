@@ -1,0 +1,11 @@
+layer,variable,scaled_variable,grain,mean,sd,n_reference
+"detection","log_effort","log_effort_z","day",1.20379381204858,0.122884725404293,9912
+"detection","log1p_anthropogenic_rate","log1p_anthropogenic_rate_z","day",3.49573443551123,1.64932513053154,9912
+"detection","log1p_frog_rate","log1p_frog_rate_z","day",2.01419647440354,2.00952921274723,9912
+"occurrence_static","trees","trees","site",0.535439600738597,0.141488187356391,31
+"occurrence_static","tree_edge_area_50m","tree_edge_area_50m","site",69593.74568848,32888.3255571453,31
+"occurrence_static","built","built","site",0.112819353137932,0.0875744324081189,31
+"occurrence_static","grass","grass","site",0.0457157775814101,0.00600259240875603,31
+"occurrence_static","dist_water_m_nearest","dist_water_m_nearest","site",846.095378870219,705.414792999794,31
+"occurrence_static","elevation","elevation","site",69.36775982798,90.5954068174898,31
+"occurrence_static","road_density","road_density","site",1.68291877457175,3.04247119924892,31

@@ -21,7 +21,10 @@ EXPECTED_TABLES = [BASE / "tables" / f"{stem}.xlsx" for stem in TABLE_STEMS]
 EXPECTED_FIGURES = [BASE / "figures" / f"{stem}.pdf" for stem in FIGURE_STEMS]
 EXPECTED_PREVIEWS = [BASE / "figures" / "previews" / f"{stem}.png" for stem in FIGURE_STEMS]
 EXPECTED_INFORMATION = [BASE / "supplementary-information" / "Supplementary_Information.pdf"]
-EXPECTED_ASSETS = EXPECTED_INFORMATION + EXPECTED_TABLES + EXPECTED_FIGURES + EXPECTED_PREVIEWS
+MAIN_FIGURES = [BASE / 'main-figures' / f'Figure_{i}.pdf' for i in range(1,5)]
+MAIN_PREVIEWS = [BASE / 'main-figures' / 'previews' / f'Figure_{i}.png' for i in range(1,5)]
+MAIN_TABLES = [BASE / 'main-tables' / f'Table_1.{ext}' for ext in ('pdf','xlsx')]
+EXPECTED_ASSETS = EXPECTED_INFORMATION + EXPECTED_TABLES + EXPECTED_FIGURES + EXPECTED_PREVIEWS + MAIN_FIGURES + MAIN_PREVIEWS + MAIN_TABLES
 
 FORBIDDEN_TEXT = re.compile(
     rb"/Users/|/Volumes/|[A-Za-z]:\\Users\\|HEX250_|e22556|David[ ]+Chen|"
@@ -72,7 +75,7 @@ def validate_inventory() -> None:
 
 
 def validate_workbooks() -> None:
-    for path in EXPECTED_TABLES:
+    for path in EXPECTED_TABLES + [BASE/'main-tables/Table_1.xlsx']:
         with zipfile.ZipFile(path) as workbook:
             names = workbook.namelist()
             if any("comments" in name.lower() or "externallink" in name.lower() for name in names):
@@ -92,11 +95,11 @@ def validate_workbooks() -> None:
 
 
 def validate_binary_strings() -> None:
-    for path in EXPECTED_INFORMATION + EXPECTED_FIGURES:
+    for path in EXPECTED_INFORMATION + EXPECTED_FIGURES + MAIN_FIGURES + [BASE/'main-tables/Table_1.pdf']:
         content = path.read_bytes()
         if FORBIDDEN_TEXT.search(content):
             fail(f"PDF contains a private path, identifier or coordinate string: {relative(path)}")
-    for path in EXPECTED_PREVIEWS:
+    for path in EXPECTED_PREVIEWS + MAIN_PREVIEWS:
         if FORBIDDEN_TEXT.search(path.read_bytes()):
             fail(f"Preview contains a private string: {relative(path)}")
 
@@ -105,8 +108,8 @@ def validate_manifest() -> None:
     manifest_path = BASE / "manifests" / "supplementary_artifacts.csv"
     with manifest_path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
-    if len(rows) != 38:
-        fail(f"Expected 38 supplementary artifact rows; found {len(rows)}.")
+    if len(rows) != 48:
+        fail(f"Expected 48 material artifact rows; found {len(rows)}.")
     ids = [row["artifact_id"] for row in rows]
     if len(ids) != len(set(ids)):
         fail("Supplementary artifact IDs are not unique.")
@@ -159,7 +162,7 @@ def main() -> int:
     validate_workbooks()
     validate_binary_strings()
     validate_manifest()
-    print("Supplementary-material contract PASS: 1 complete PDF, 17 tables, 10 figure PDFs, 10 previews and verified checksums.")
+    print("Material checks PASS: 1 supplement PDF, 17 workbooks, 10 supplementary figures, 4 main figures, Table 1 and previews (48 assets).")
     return 0
 
 

@@ -1,6 +1,6 @@
 # Join recording effort and detections to build daily survey histories.
 
-prepare_survey_histories <- function(effort, detections) {
+prepare_survey_histories <- function(effort, detections, calendar = NULL) {
   require_package("data.table")
   effort <- data.table::as.data.table(effort)
   detections <- data.table::as.data.table(detections)
@@ -38,11 +38,24 @@ prepare_survey_histories <- function(effort, detections) {
   daily[valid_survey == FALSE, positive_minutes := NA_integer_]
   daily[, detected := as.integer(positive_minutes > 0)]
 
-  first_date <- min(daily$date, na.rm = TRUE)
-  daily[, study_week := as.integer(as.integer(date - first_date) %/% 7) + 1L]
-  daily[, annual_week := as.integer(strftime(date, format = "%V"))]
-  daily[, survey_day := as.integer(format(date, "%u"))]
-  seasonal <- week_terms(daily$annual_week)
+  if (is.null(calendar)) {
+    # For a new dataset, index represented Monday-start weeks without filling gaps.
+    dates <- sort(unique(daily$date))
+    starts <- dates - (as.integer(format(dates, "%u")) - 1L)
+    calendar <- data.frame(date = dates, week_start = starts,
+                           study_week = match(starts, sort(unique(starts))),
+                           survey_day = as.integer(format(dates, "%u")))
+  }
+  calendar <- data.table::as.data.table(calendar)
+  stopifnot(all(c("date", "week_start", "study_week", "survey_day") %in% names(calendar)))
+  calendar[, `:=`(date = as.Date(date), week_start = as.Date(week_start))]
+  if (anyDuplicated(calendar$date) || anyDuplicated(calendar[, .(study_week, survey_day)])) {
+    stop("The authoritative calendar must have unique date and week/day keys.", call. = FALSE)
+  }
+  daily <- merge(daily, calendar, by = "date", all.x = TRUE)
+  if (anyNA(daily$study_week)) stop("A survey date is missing from the calendar.", call. = FALSE)
+  daily[, annual_week := reporting_week(date)]
+  seasonal <- dated_terms(daily$week_start)
   daily[, `:=`(sin_week = seasonal$sin_week, cos_week = seasonal$cos_week)]
   data.table::setorder(daily, species_group, station_id, study_week, date)
   daily[]
@@ -109,7 +122,9 @@ run_prepare_survey_histories <- function() {
     full_asset("acoustic_detections"),
     c("station_id", "date", "sampled_minute", "species_group")
   )
-  daily <- prepare_survey_histories(effort, detections)
+  calendar_path <- full_asset("date_week_registry", required = FALSE)
+  if (is.null(calendar_path)) stop("Supply the authoritative date_week_registry for a study run.", call.=FALSE)
+  daily <- prepare_survey_histories(effort, detections, read_table(calendar_path))
   out <- full_output_dir("01_survey_histories")
   write_table(daily, file.path(out, "daily_survey_histories.csv"))
   write_table(

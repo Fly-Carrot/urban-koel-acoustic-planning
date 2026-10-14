@@ -180,7 +180,9 @@ paired_station_contrast <- function(station_scores) {
 
 run_transfer_validation <- function(M = 3L) {
   folds <- read_table(full_asset("fold_registry"), c("station_id", "fold_id"))
-  scales <- c(100L, 250L, 500L)
+  # Host-inclusive transfer is evaluated at 250 m. The 100/500-m comparison
+  # uses a separate no-host coordinate-trend model (Supplementary Data 10A).
+  scales <- 250L
   result_rows <- list()
   point_rows <- list()
   scaling_rows <- list()
