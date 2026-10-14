@@ -1,8 +1,8 @@
 # Supplementary Data 1–17
 
-Each data file is an independent Excel workbook. Stable filenames are retained: `Table_S01.xlsx` is Supplementary Data 1. Internal worksheet names and table-part labels are unchanged. This index supplies each full title and Supplementary Methods section.
+These 17 workbooks are the public export updated on 11 October 2026. `Table_S01.xlsx` is Supplementary Data 1. Worksheet names and internal table-part labels are unchanged. Full titles and Methods sections are listed below.
 
-| Table | Title | Section | File |
+| Internal table | Title | Section | File |
 |---|---|---|---|
 | S1 | Monitoring-station sampling coverage, Koel detections and spatial-validation folds | S1 | [`Table_S01.xlsx`](Table_S01.xlsx) |
 | S2 | Detection-history reconciliation | S1 | [`Table_S02.xlsx`](Table_S02.xlsx) |

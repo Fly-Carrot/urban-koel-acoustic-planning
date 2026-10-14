@@ -1,3 +1,5 @@
+# Check station and city environmental predictors at each supplied scale.
+
 environmental_predictor_names <- function() {
   c("trees", "built", "grass", "road_density", "tree_edge_area_50m",
     "dist_water_m_nearest", "elevation")

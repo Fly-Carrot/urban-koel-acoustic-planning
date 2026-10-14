@@ -2,11 +2,11 @@
 
 ## Scientific or software change
 
-## Reproduction evidence
+## Checks
 
 - [ ] `make smoke`
 - [ ] `make verify`
 - [ ] `make test`
 - [ ] no sensitive coordinates, raw audio, credentials or absolute local paths
-- [ ] script card and registries updated where needed
+- [ ] script notes and input descriptions updated where needed
 

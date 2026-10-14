@@ -1,7 +1,7 @@
 {
   "title": "Supplementary materials for: Urban planning leaves an audible legacy in a megacity’s bird soundscape",
   "upload_type": "software",
-  "description": "Supplementary materials for the manuscript Urban planning leaves an audible legacy in a megacity’s bird soundscape, prepared for Communications Earth & Environment. Includes Supplementary Information, Supplementary Data 1–17, Supplementary Figures 1–10, R and Stan code, and public summary data. Exact coordinates and restricted source data are excluded.",
+  "description": "Accompanying materials for Urban planning leaves an audible legacy in a megacity’s bird soundscape. Includes supplementary methods, tables and figures, R and Stan code, and aggregate summary data. The repository documents the required model inputs and the current scope of the public implementation. Raw recordings, model-ready station-level inputs and exact coordinates are not included.",
   "creators": [
     {"name": "Chen, Yuhao"},
     {"name": "Hao, Zezhou"},

@@ -1,3 +1,5 @@
+# Predict weekly opportunity and exposure using city covariates and fitted draws.
+
 prediction_design <- function(formula, data, coefficient_names) {
   x <- stats::model.matrix(formula, data = data)
   missing <- setdiff(coefficient_names, colnames(x))

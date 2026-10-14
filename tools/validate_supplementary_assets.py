@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed checks for the public manuscript supplementary-material bundle."""
+"""Check supplementary files, checksums and excluded private details."""
 
 from __future__ import annotations
 
@@ -166,6 +166,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except Exception as exc:  # fail closed with one clear CI message
+    except Exception as exc:  # report a failed check and stop
         print(f"Supplementary-material contract FAIL: {exc}", file=sys.stderr)
         sys.exit(1)

@@ -1,3 +1,5 @@
+# Check expected summary files and reported totals.
+
 validate_release <- function(root = repo_root()) {
   reconciliation <- read_csv_release(file.path(root, "data", "processed", "reference", "survey_reconciliation.csv"))
   assert_release(all(reconciliation$pass), "Survey counts do not reconcile.")

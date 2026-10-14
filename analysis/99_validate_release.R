@@ -1,3 +1,5 @@
+# Check outputs; see R/validate_release.R and R/full_pipeline.R.
+
 source(file.path("R", "release_utils.R"))
 source(file.path("R", "full_pipeline.R"))
 run_analysis_step("99_validate_release")

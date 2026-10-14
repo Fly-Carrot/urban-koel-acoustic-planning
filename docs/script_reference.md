@@ -1,75 +1,59 @@
-# Script reference
+# Notes for each script
 
-The scripts run in manuscript order. `verify` checks the published summaries; `full` implements the selected workflow with approved model-ready inputs. See [analysis_coverage.md](analysis_coverage.md) for differences from the archived analysis, and [mcmc_settings.md](mcmc_settings.md) for the retained sampling settings.
+The numbered files in `analysis/` select a step. Calculations are in the linked R files. `make verify` checks stored summaries; `make full` runs the modelling functions with additional inputs. Read [code coverage](analysis_coverage.md) before attempting a study reproduction.
 
 ## `00_preflight`
 
-- Checks the input manifest and repository files.
-- Full input: `data/full/manifest.csv`.
+[Code](../R/full_pipeline.R): check the required input entries in `data/full/manifest.csv`. The public-summary run instead checks the released files.
 
 ## `01_prepare_survey_histories`
 
-- Joins recording effort to retained detections.
-- Writes daily histories and assigns zero only to effort-confirmed surveys.
+[Code](../R/survey_histories.R): join recording effort to retained detections. Input: `survey_effort` and `acoustic_detections`. Output: daily histories and reconciliation totals. Zeros are assigned only to recorded surveys.
 
 ## `02_select_detection_backbone`
 
-- Fits effort-only and acoustic-context detection models.
-- Compares them with PSIS-LOO and convergence summaries.
+[Code](../R/occupancy_models.R): fit effort-only and acoustic-context detection models using daily histories and observation covariates. Output: PSIS-LOO comparisons and convergence summaries.
 
 ## `03_build_environmental_predictors`
 
-- Checks the seven station and city predictors used by the models.
-- Keeps station-centred ecological neighbourhoods separate from reporting cells.
+[Code](../R/environmental_predictors.R): check the seven station and city predictors at the supplied scales. Output: completeness and predictor checks. Ecological neighbourhoods and reporting cells remain separate.
 
 ## `04_fit_potential_host_opportunity`
 
-- Fits weekly detection-corrected models for corvids, sturnids and Masked Laughingthrush.
-- Saves model objects and coefficient summaries.
+[Code](../R/occupancy_models.R): fit weekly models for corvids, sturnids and Masked Laughingthrush from host histories and covariates. Output: model objects and coefficient summaries.
 
 ## `05_fit_koel_weekly_opportunity`
 
-- Fits no-host and three-host Koel models.
-- Propagates three complete posterior host surfaces through three Koel refits.
+[Code](../R/occupancy_models.R): fit no-host and three-host Koel models. Three complete host posterior surfaces enter three separate Koel fits. Output: fitted models and coefficient summaries.
 
 ## `06_validate_scale_and_transfer`
 
-- Withholds complete stations in five folds.
-- Repeats host and Koel fitting at 100, 250 and 500 m, then reports ELPD, Brier score and calibration.
-- Scores complete station histories with one shared unseen-station effect; pools host imputations as an equal-weight probability mixture.
+[Code](../R/transfer_validation.R): withhold whole stations in five folds; refit hosts and Koel models using training-only scaling. Input: folds and covariates at 100, 250 and 500 m. Output: held-station predictions, ELPD, Brier scores and calibration. Complete station histories share an unseen-station effect; host fits are pooled on the probability scale.
 
 ## `07_fit_joint_calling_density`
 
-- Fits three HEQZ daily joint models and a D1 hourly model in Stan.
-- D1 uses annual terms and two hour harmonics, conditioning on a positive day.
+[Code](../R/calling_density.R): fit three HEQZ daily joint models and a D1 hourly model in Stan. Input: daily/hourly counts and matching covariates. Output: fits and posterior summaries. D1 retains surveyed zero-count hours within positive days.
 
 ## `08_predict_citywide_activity`
 
-- Projects the coordinate-free three-host model across 52 weeks.
-- Writes posterior means, medians, credible intervals and interval width for every cell-week.
-- Combines matched HEQZ occurrence, detection and host-season density draws with D1 hour effects. Uses 144 scheduled minutes per reference day; multiplies components before summarising exposure.
+[City code](../R/city_prediction.R) and [exposure code](../R/exposure_prediction.R): project model draws over 52 annual weeks. Input: city predictors and fitted draws. Output: cell-week opportunity, credible intervals, hourly and all-day exposure. Matched HEQZ and D1 components are combined before summarising; the reference day has 144 sampled minutes.
 
 ## `09_classify_prediction_support`
 
-- Derives PID from land-cover context.
-- Derives AOA from training ranges and nearest-station environmental distance.
+[Code](../R/prediction_support.R): derive PID from land cover and AOA from the monitored predictor space. Input: station and city predictors. Output: support classes per cell. The current Boundary-to-tier mapping differs from the paper; see [code coverage](analysis_coverage.md).
 
 ## `10_summarise_planning_overlap`
 
-- Joins supported predictions to planning-sensitive points and urban-function areas.
-- Uses one weight per point and overlap area for polygons.
+[Code](../R/planning_overlap.R): join supported predictions to planning-sensitive points and urban-function areas. Points have equal weights; polygons use overlap area. Output: grouped weekly opportunity. The public function does not yet calculate the published dawn metrics.
 
 ## `11_design_adaptive_monitoring`
 
-- Greedily expands environmental coverage in Monitoring Gaps.
-- Separately ranks uncertain spring predictions for field validation.
+[Code](../R/monitoring_design.R): rank coverage candidates and uncertain spring predictions. Input: candidate predictors, coordinates, support and uncertainty. Output: two sequences. Eligibility, spacing and support updates differ from the study rules; see [code coverage](analysis_coverage.md).
 
 ## `12_make_manuscript_outputs`
 
-- Collects model, validation, prediction and monitoring summaries.
-- Does not refit models.
+[Code](../R/full_pipeline.R): collect the preceding model, validation, prediction and monitoring tables. No models are refitted.
 
 ## `99_validate_release`
 
-- Confirms that all expected outputs were created.
-- The public route also checks reported totals, checksums and excluded file types.
+[Model-output checks](../R/full_pipeline.R) and [public-summary checks](../R/validate_release.R): check that expected outputs exist. The public route also checks reported totals, file hashes and excluded file types.

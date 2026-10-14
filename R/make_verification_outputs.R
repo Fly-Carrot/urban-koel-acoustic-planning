@@ -1,3 +1,5 @@
+# Check stored summaries and make summary copies and plots; no model refitting.
+
 make_verification_outputs <- function(root = repo_root()) {
   psi <- read_csv_release(file.path(root, "data", "processed", "reference", "weekly_acoustic_opportunity.csv"))
   exp <- read_csv_release(file.path(root, "data", "processed", "reference", "weekly_acoustic_exposure.csv"))

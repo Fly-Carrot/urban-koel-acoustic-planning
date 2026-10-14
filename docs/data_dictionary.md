@@ -4,8 +4,8 @@
 
 | File | Unit | Core fields | Meaning |
 |---|---|---|---|
-| `survey_reconciliation.csv` | release check | `metric`, `value`, `expected`, `pass` | effort and response totals used by the fitted pipeline |
-| `model_registry_public.csv` | model component | formula and role | public names and frozen formulas |
+| `survey_reconciliation.csv` | summary check | `metric`, `value`, `expected`, `pass` | recording-effort and response totals |
+| `model_registry_public.csv` | model component | formula and role | public names and selected formulas |
 | `predictor_registry_public.csv` | predictor | likelihood layer and support | ecological, observation and reporting definitions |
 | `host_groups.csv` | species | group and scientific name | exact membership of three potential-host responses |
 | `model_effects.csv` | coefficient | median and 95% CrI | reported `psi`, `p` and `mu_plus` effects |
@@ -30,6 +30,8 @@
 | `AOA` | Area of Applicability, a monitored predictor-space support label |
 
 Percent columns are stored on a 0–100 scale; probability columns are stored on a 0–1 scale. Missing values are empty CSV fields, never coded as zero.
+
+The public predictor summary retains an older effort description. For the fitted transformation, refer to `config/predictor_registry.csv` and `R/survey_histories.R`: standardised `log1p(recorded sampled minutes / 60)`. See [code coverage](analysis_coverage.md).
 
 ## Model-ready inputs for `make full`
 

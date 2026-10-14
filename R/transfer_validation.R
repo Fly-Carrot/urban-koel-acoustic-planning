@@ -1,3 +1,5 @@
+# Refit with whole stations withheld and score their complete detection histories.
+
 subset_tpg_data <- function(data, site_index) {
   n_week <- dim(data$y)[2]
   n_day <- dim(data$y)[3]
@@ -230,8 +232,8 @@ run_transfer_validation <- function(M = 3L) {
       h0_summary$fold_id <- fold_id
       result_rows[[length(result_rows) + 1L]] <- h0_summary
 
-      # Host models are refitted inside every training fold. Their posterior
-      # surfaces are then propagated through M Koel refits.
+      # Refit hosts using training stations only, then fit Koel separately
+      # for each sampled host surface.
       host_fits <- list()
       host_test_data <- list()
       host_train_data <- list()

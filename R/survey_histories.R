@@ -1,3 +1,5 @@
+# Join recording effort and detections to build daily survey histories.
+
 prepare_survey_histories <- function(effort, detections) {
   require_package("data.table")
   effort <- data.table::as.data.table(effort)

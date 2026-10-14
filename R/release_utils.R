@@ -1,3 +1,5 @@
+# Read and write public summary files and check their contents.
+
 repo_root <- function() {
   here <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
   repeat {

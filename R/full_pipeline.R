@@ -1,3 +1,5 @@
+# Run the selected analysis step and collect its outputs.
+
 source(file.path("R", "analysis_io.R"))
 source(file.path("R", "survey_histories.R"))
 source(file.path("R", "environmental_predictors.R"))

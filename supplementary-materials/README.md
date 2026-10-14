@@ -1,38 +1,34 @@
-# Manuscript supplementary materials
+# Supplementary materials
 
-This directory contains public copies of the supplementary materials for *Urban planning leaves an audible legacy in a megacity’s bird soundscape*, prepared for *Communications Earth & Environment*.
+Public copies accompanying *Urban planning leaves an audible legacy in a megacity’s bird soundscape*.
 
-The materials are organised as four parallel collections so that readers can open the complete supplement or retrieve an individual table, figure or verification record.
+| Material | Open |
+|---|---|
+| Supplementary Methods S1–S9 and captions | [Supplementary Information PDF](supplementary-information/Supplementary_Information.pdf) |
+| Supplementary Data 1–17 | [Excel workbooks](tables/README.md) |
+| Supplementary Figures 1–10 | [PDFs and previews](figures/README.md) |
+| File inventory and checksums | [Manifests](manifests/README.md) |
 
-| Collection | Contents | Entry point |
-|---|---|---|
-| Supplementary Information | Complete Supplementary Methods and captions | [`Supplementary_Information.pdf`](supplementary-information/Supplementary_Information.pdf) |
-| Supplementary Data 1–17 | Seventeen independently downloadable Excel workbooks | [`tables/`](tables/) |
-| Supplementary Figs. 1–10 | Ten publication-quality PDFs and lightweight PNG previews | [`figures/`](figures/) |
-| Manifests | Machine-readable inventory and SHA-256 checksums | [`manifests/`](manifests/) |
+## Version and numbering
 
-## Link to the analytical workflow
+These files are the public export updated on **11 October 2026**, prepared during the Communications Earth & Environment manuscript stage. They have not been replaced with later Science Advances revisions. Figure panels remain lowercase in this export.
 
-The supplementary sections follow the manuscript workflow:
+Short filenames are unchanged: `Table_S01.xlsx` is Supplementary Data 1 and `Figure_S01.pdf` is Supplementary Figure 1. Workbook sheet names and internal table-part labels are retained.
 
-| Supplementary section | Analytical role | Tables | Figures |
+| Methods section | Subject | Data files | Figures |
 |---|---|---|---|
-| S1 | Passive acoustic monitoring and AI-assisted identification | S1-S3 | S1 |
-| S2 | Daily detection process | S4-S5 | S2 |
-| S3 | Environmental and potential-host predictors | S6-S8 | S3 |
-| S4 | Weekly Koel acoustic opportunity and spatial transfer | S9-S10 | S4-S5 |
-| S5 | Joint calling density and sampled-minute acoustic exposure | S11-S12 | S6 |
-| S6 | City prediction, PID and AOA | S13-S14 | S7 |
-| S7 | Planning-sensitive places and urban functions | S15 | S8 |
-| S8 | Adaptive monitoring design | S16 | S9-S10 |
-| S9 | Software, provenance and reproducibility | S17 | - |
+| S1 | Acoustic monitoring and identification | 1–3 | 1 |
+| S2 | Daily detection | 4–5 | 2 |
+| S3 | Environmental and potential-host predictors | 6–8 | 3 |
+| S4 | Koel opportunity and spatial transfer | 9–10 | 4–5 |
+| S5 | Calling density and sampled-minute exposure | 11–12 | 6 |
+| S6 | City prediction, PID and AOA | 13–14 | 7 |
+| S7 | Planning-sensitive overlaps | 15 | 8 |
+| S8 | Monitoring design | 16 | 9–10 |
+| S9 | Software and availability | 17 | — |
 
-## Public-release boundary
+## Public copies
 
-The public copies preserve manuscript-facing summaries while protecting recorder security, site privacy and third-party licences. Exact recorder coordinates, exact candidate-HEX identifiers, granular points of interest, raw audio, model weights and third-party source rasters are not redistributed. Public station summaries use anonymised codes `ST01`-`ST31`; monitoring candidates use route-specific ranks `L1`-`L15` and `V1`-`V15`. Figure S1 retains map-scale station context required to understand the validation design, without distributing coordinate records.
+Station summaries use anonymous codes ST01–ST31. Candidate lists use route-specific L and V ranks. Exact coordinate records and internal candidate identifiers are omitted; maps retain the broad spatial context shown in the study. Details are recorded in the [inventory](manifests/supplementary_artifacts.csv).
 
-The PDF and individual files contain the same scientific results. Stable filenames are retained: `Table_S01.xlsx` corresponds to Supplementary Data 1, and `Figure_S01.pdf` corresponds to Supplementary Fig. 1. Workbook sheet names and internal table-part labels are unchanged. The indexes provide full titles, and [`manifests/supplementary_artifacts.csv`](manifests/supplementary_artifacts.csv) records filenames and provenance. The public Information PDF clarifies stage-specific sampling settings and public access limits; it does not redistribute the submission manuscript.
-
-## Licensing
-
-Project-owned supplementary text, tables and figures are released under [CC BY 4.0](LICENSE.md). Third-party source data and model assets are excluded or remain under their original terms; see [`../THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md).
+Project-owned supplementary text, tables and figures are [CC BY 4.0](LICENSE.md). Third-party sources retain their own terms; see [source notices](../THIRD_PARTY_NOTICES.md).

@@ -1,9 +1,8 @@
-# Supplementary-material manifests
+# File inventory and checksums
 
-- [`supplementary_artifacts.csv`](supplementary_artifacts.csv) records each public PDF, workbook and PNG preview, its manuscript section, short public filename, full descriptive title, v2 source filename, privacy treatment, licence, file size and SHA-256 digest. Public files retain the scientific content of the v2 submission assets while applying the documented release redactions.
-- [`checksums.sha256`](checksums.sha256) covers every file in `supplementary-materials/` except the checksum file itself.
+[supplementary_artifacts.csv](supplementary_artifacts.csv) lists the 38 PDFs, workbooks and previews with their full titles, source version, redactions, licences and hashes.
 
-Verify the complete collection from the repository root with:
+[checksums.sha256](checksums.sha256) covers every file in this supplementary directory except itself. To check the files, run from the repository root:
 
 ```bash
 cd supplementary-materials

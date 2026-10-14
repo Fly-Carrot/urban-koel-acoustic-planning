@@ -1,15 +1,14 @@
-# Model roles and frozen decisions
+# Model roles
 
-The analysis contains two legitimate model-selection views that answer different questions.
+| Model | Role in the study |
+|---|---|
+| H4 P0: three-host Koel model without coordinate trends, 250 m | Primary model for weekly opportunity, supported city mapping and planning summaries. |
+| H0 Pxy: no-host model with projected coordinate trends | Predictive benchmark for broad spatial variation. |
+| HEQZ: equal-scale host index and annual terms | Host-informed daily calling-density model. Its completed draws are combined with D1 hourly effects for city exposure. |
+| Season-only daily density | Comparison model because the HEQZ transfer gain varied among folds. |
+| D1: annual terms and two cyclic-hour harmonics | Retained hourly density model, fitted to recorded hours on positive days. |
 
-| Role | Public description | Decision |
-|---|---|---|
-| article ecological-planning primary | coordinate-free, three-host Koel transfer model at 250 m | used for ecological effects, supported city mapping, planning overlap and monitoring design |
-| broad-coordinate predictive benchmark | no-host model with projected coordinate trends | retained as a transfer sensitivity; not used for ecological mechanism claims |
-| host-informed calling-density branch | HEQZ: equal-scale host index + annual season + cyclic hour | used to maintain the ecological activity chain and reported with fold heterogeneity |
-| seasonal density sensitivity | annual season without host index | retained because the HEQZ gain was not uniform across all folds |
+H4 P0 improved the matched coordinate-free no-host comparison; it was not the numerical winner in every comparison. Model coefficients describe predictive acoustic associations.
 
-The repository does not call the article-primary model universally “best”. It records the question-specific role, the matched comparison and the relevant limitations.
-
-See `config/model_registry.csv` for machine-readable formulas and `docs/script_reference.md` for the decision sequence.
+Formulae are recorded in [config/model_registry.csv](../config/model_registry.csv). Supplementary Data 9–11 provide the study comparisons. See [code coverage](analysis_coverage.md) for the subset run by the public scripts.
 

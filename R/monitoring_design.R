@@ -1,3 +1,5 @@
+# Rank additional monitoring candidates using environmental coverage and uncertainty.
+
 far_enough <- function(candidate, chosen, minimum_distance) {
   if (!length(chosen)) return(TRUE)
   all(sqrt((candidate$x - vapply(chosen, `[[`, numeric(1), "x"))^2 +

@@ -1,4 +1,4 @@
-# Reproducing the analysis
+# Running the code
 
 ## Check the public summaries
 
@@ -8,15 +8,18 @@ make verify
 make test
 ```
 
-This route uses the aggregate files in `data/processed/reference/` and writes its results to `outputs/`.
+`make verify` reads aggregate files in `data/processed/reference/`, checks reported totals and writes summary copies and plots to `outputs/`. It does not estimate new model parameters. `make test` checks calculations using small examples; missing optional test packages are reported.
 
-## Refit with approved inputs
+## Run the modelling functions
 
-1. Copy `config/full_data_manifest_example.csv` to `data/full/manifest.csv`.
-2. Replace the example paths with local model-ready files.
-3. Install the packages in `docs/system_requirements.md` and CmdStan.
-4. Run `make full`.
+1. Read [current code coverage](analysis_coverage.md). Several details differ from the retained study analysis.
+2. Prepare compatible inputs using the [data dictionary](data_dictionary.md).
+3. Copy `config/full_data_manifest_example.csv` to `data/full/manifest.csv` and enter your local input paths.
+4. Install the [required packages](system_requirements.md) and CmdStan.
+5. Run `make full`.
 
-The full route fits host and Koel models, scores complete held-station histories, fits daily and hourly density models, predicts city cell-weeks, classifies PID/AOA, summarises planning overlaps and ranks new monitoring sites. It retains the final calculation logic, without replaying every candidate fit. Model-ready tables must use the retained covariate scaling and matching host draw IDs. See [analysis_coverage.md](analysis_coverage.md) for the scope and [mcmc_settings.md](mcmc_settings.md) for sampling profiles.
+Results go to `outputs/full/`. See [notes for each script](script_reference.md) for inputs and outputs and [sampling settings](mcmc_settings.md) for MCMC settings.
 
-Three complete sets of host posterior surfaces carry host uncertainty through three Koel refits. Predictive probabilities are pooled with equal weights. Three sets are a limited uncertainty-propagation analysis, not a stabilised large-M analysis.
+Three sets of host posterior surfaces enter three separate Koel fits. Each set contributes equally to predictions. These are three uncertainty-propagation sets, not three MCMC chains.
+
+The model-ready study inputs are not included. Successful execution with new inputs would not, by itself, reproduce the paper's estimates.

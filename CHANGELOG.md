@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-14
+
+- Shortened the repository introduction and linked directly to the modelling functions.
+- Clarified public data, running instructions and the supplementary-file version.
+- Documented differences between public code and the retained study analysis.
+- Simplified script notes and comments. Model calculations, numerical data and figure/table files are unchanged.
+
 ## 2026-10-11
 
 - Updated the manuscript title, journal and ten-author citation metadata.

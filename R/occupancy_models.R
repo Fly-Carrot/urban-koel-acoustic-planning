@@ -1,3 +1,5 @@
+# Fit daily detection, potential-host and Koel weekly-opportunity models.
+
 primary_detection_formula <- function() {
   ~ log_effort_z + log1p_anthropogenic_rate_z + log1p_frog_rate_z + (1 | site_re)
 }
@@ -170,7 +172,7 @@ run_host_models <- function() {
   for (i in seq_along(formulas)) {
     role <- names(formulas)[[i]]
     data <- read_model_inputs(response_names[[role]])
-    # The retained sturnid refit used the longer profile.
+    # The retained sturnid fit used more sampling iterations.
     profile <- if (role == "sturnid") "validation" else "full_data"
     fit <- fit_tpg_model(data, formulas[[role]], primary_detection_formula(), 2026081500L + i,
                          settings = full_mcmc_settings(profile))

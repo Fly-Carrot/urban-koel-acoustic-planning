@@ -1,6 +1,6 @@
 # Third-party sources and notices
 
-This repository does not redistribute the source rasters, raw OpenStreetMap records, AI model weights or raw acoustic recordings used in the full study. Users running the conditional full profile must obtain each asset from its provider and comply with its terms.
+The source rasters, raw OpenStreetMap records, AI model weights and acoustic recordings used in the study are not included here. Obtain third-party source data from the providers below and follow their terms.
 
 | Source | Study use | Redistribution in this repository | Licence and official source |
 |---|---|---|---|

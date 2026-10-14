@@ -1,3 +1,5 @@
+# Fit daily HEQZ and hourly D1 models from positive-minute counts.
+
 strip_random_effects <- function(formula) {
   require_package("reformulas")
   reformulas::nobars(formula)

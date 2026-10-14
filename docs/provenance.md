@@ -1,7 +1,9 @@
-# Provenance
+# Where the files come from
 
-The ordered scripts follow the analysis reported in the manuscript. Public summary files in `data/processed/reference/` provide a lightweight check of reported values. The `full` route reads approved model-ready inputs and writes new results below `outputs/full/`.
+The [Methods-to-code map](code_map.md) links each analysis step to its inputs, calculations and outputs.
 
-The link from each method to its script, input and output is listed in [`code_map.md`](code_map.md). Public summary provenance is recorded in [`../config/provenance_registry.csv`](../config/provenance_registry.csv), and checksums are recorded in `data/manifests/` and `supplementary-materials/manifests/`.
+Public CSV files in `data/processed/reference/` contain reported aggregate summaries. Their sources are recorded in [config/provenance_registry.csv](../config/provenance_registry.csv), and their hashes in [data/manifests/](../data/manifests/).
 
-Three complete host posterior surfaces are propagated through the primary Koel model. This is the uncertainty treatment reported in the article; it should not be described as a large multiple-imputation analysis.
+The [supplementary inventory](../supplementary-materials/manifests/supplementary_artifacts.csv) records the source version and redactions for each public PDF, workbook and preview. These files were last updated on 11 October 2026.
+
+New model-fitting results go to `outputs/full/`. They are separate from the released reference summaries. See [code coverage](analysis_coverage.md) before comparing them with published estimates.

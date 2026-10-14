@@ -1,3 +1,5 @@
+# Read model inputs, build design matrices and summarise posterior draws.
+
 require_package <- function(package) {
   if (!requireNamespace(package, quietly = TRUE)) {
     stop("Install the R package '", package, "' to run the full analysis.", call. = FALSE)

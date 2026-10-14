@@ -1,3 +1,5 @@
+# Classify land-cover context and similarity to monitored environments.
+
 nearest_distance <- function(query, reference, block_size = 1000L) {
   answer <- numeric(nrow(query))
   for (start in seq(1L, nrow(query), by = block_size)) {

@@ -1,6 +1,6 @@
 # Supplementary Figs. 1–10
 
-PDF files are the canonical figures. The `previews/` directory provides first-page PNG previews for browsing on GitHub. `Figure_S01.pdf` is Supplementary Fig. 1. Panels use lowercase letters; this index supplies full titles and sections.
+PDFs and PNG previews are the public export updated on 11 October 2026. `Figure_S01.pdf` is Supplementary Figure 1. Panels remain lowercase in this version; later manuscript revisions have not been substituted.
 
 | Figure | Title | Section | PDF | Preview |
 |---|---|---|---|---|
@@ -15,7 +15,7 @@ PDF files are the canonical figures. The `previews/` directory provides first-pa
 | S9 | Monitoring-priority surfaces | S8 | [`Figure_S09.pdf`](Figure_S09.pdf) | [PNG](previews/Figure_S09.png) |
 | S10 | Sequential Coverage Expansion and Prediction Validation candidates | S8 | [`Figure_S10.pdf`](Figure_S10.pdf) | [PNG](previews/Figure_S10.png) |
 
-## Accessibility
+## Reading guide
 
 - **S1:** station-fold locations and recording-effort coverage through time.
 - **S2-S3:** calibration of daily-detection and potential-host models at withheld stations.
@@ -25,6 +25,6 @@ PDF files are the canonical figures. The `previews/` directory provides first-pa
 
 Figure captions and symbol definitions are contained in [`../supplementary-information/Supplementary_Information.pdf`](../supplementary-information/Supplementary_Information.pdf).
 
-## Public-release note
+## Coordinate redactions
 
 Figure S1 uses anonymised `ST01`-`ST31` labels in the effort history and shows only map-scale station context; exact coordinates are not distributed. Figure S10 reports route-specific ranks only, with internal candidate-HEX identifiers removed.

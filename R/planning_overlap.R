@@ -1,3 +1,5 @@
+# Summarise weekly opportunity at mapped points and urban-function areas.
+
 posterior_group_summary <- function(draws, row_index, weight) {
   keep <- is.finite(row_index) & is.finite(weight) & weight > 0
   if (!any(keep)) {

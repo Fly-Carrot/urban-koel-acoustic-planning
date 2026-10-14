@@ -66,7 +66,7 @@ predict_modular_exposure <- function(grid, equal_host_z, joint, hourly, n_draws 
   set.seed(475027L + 100L + imputation)
   day_quantiles <- sample(stats::qnorm((seq_len(n) - 0.5) / n), replace = FALSE)
   exposure <- matrix(NA_real_, nrow(grid), n)
-  # Matching row IDs preserve beta_occ, alpha_det and gamma_int from one draw.
+  # Keep opportunity, detection and daily density from the same posterior row.
   for (start in seq(1L, nrow(grid), by = chunk_size)) {
     rows <- start:min(nrow(grid), start + chunk_size - 1L)
     psi <- stats::plogis(x[rows, , drop = FALSE] %*% t(beta))

@@ -1,10 +1,10 @@
-# Public data bundle
+# Public summary data
 
-`processed/reference/` contains small, non-sensitive, machine-readable products sufficient for the public verification profile. These files contain no exact monitoring or candidate-site coordinates, no raw audio, no granular POI records and no third-party raster pixels.
+[processed/reference/](processed/reference/) contains the released numerical summaries used by `make verify`. They are aggregate results, not model-fitting inputs.
 
-`example/` contains simulated records used only to test interfaces. Example values must never be interpreted as study results.
+[example/](example/) contains simulated records for testing calculations, not study observations.
 
-`manifests/` records hashes, roles and provenance for every released reference product.
+[manifests/](manifests/) records each summary file and its checksum.
 
-The excluded full-data classes and the manifest required by `make full` are documented in `docs/data_access.md`.
+See [data access](../docs/data_access.md) for missing inputs and [field descriptions](../docs/data_dictionary.md) for definitions.
 
