@@ -41,8 +41,8 @@ summarise_new_weekly_overlap <- function() {
   supported <- support[support_class %in% c("Primary Results", "Moderate Extrapolation")]
   prediction <- merge(prediction, supported[, .(cell_id)], by = "cell_id")
 
-  points <- read_table(full_asset("planning_sensitive_points"), c("cell_id", "context_class"))
-  polygons <- read_table(full_asset("urban_function_overlap"),
+  points <- read_table(input_file("planning_sensitive_points"), c("cell_id", "context_class"))
+  polygons <- read_table(input_file("urban_function_overlap"),
                          c("cell_id", "context_class", "overlap_area_m2"))
   point_join <- merge(points, prediction, by = "cell_id")
   point_join[, weight := 1]

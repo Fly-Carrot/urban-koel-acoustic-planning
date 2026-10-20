@@ -1,6 +1,6 @@
 # Read the released, de-identified inputs used by the retained models.
 study_input_dir <- function() file.path(repo_root(), "data", "model-inputs")
-study_output_dir <- function() file.path(repo_root(), "data", "model-outputs")
+study_output_dir <- function() file.path(repo_root(), "results", "posterior_draws")
 
 read_json_gz <- function(path) {
   require_package("jsonlite")

@@ -130,9 +130,9 @@ read_model_inputs <- function(response_group) {
     file.path(full_output_dir("01_survey_histories"), "daily_survey_histories.csv"),
     c("station_id", "study_week", "survey_day", "species_group", "detected")
   )
-  weekly <- read_table(full_asset("weekly_covariates"), c("station_id", "study_week"))
+  weekly <- read_table(input_file("weekly_covariates"), c("station_id", "study_week"))
   detection <- read_table(
-    full_asset("daily_detection_covariates"),
+    input_file("daily_detection_covariates"),
     c("station_id", "study_week", "survey_day", "log1p_anthropogenic_rate_z", "log1p_frog_rate_z")
   )
   make_tpg_data(daily, weekly, detection, response_group)

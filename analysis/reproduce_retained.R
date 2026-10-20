@@ -1,7 +1,5 @@
 # Recalculate released predictions and summaries without a new MCMC fit.
-source("R/release_utils.R")
-source("R/full_pipeline.R")
-source("R/study_inputs.R")
+source("R/load.R")
 source("R/reproduce_study.R")
 require_package("matrixStats")
 out <- full_output_dir("retained_reproduction")

@@ -26,7 +26,7 @@ predict_host_surface <- function(fit, draw_index, formula, grid, centre, scale) 
 
 run_city_prediction <- function(n_draws = 600L, n_exposure_draws = 300L) {
   require_package("data.table")
-  city <- read_table(full_asset("city_predictors_250"), c("cell_id"))
+  city <- read_table(input_file("city_predictors_250"), c("cell_id"))
   grid <- city_week_grid(city)
   host_models <- readRDS(file.path(full_output_dir("04_host_models"), "host_models.rds"))
   koel_models <- readRDS(file.path(full_output_dir("05_koel_models"), "koel_models.rds"))
@@ -36,7 +36,7 @@ run_city_prediction <- function(n_draws = 600L, n_exposure_draws = 300L) {
   exposure_by_imputation <- vector("list", M)
   joint <- readRDS(file.path(full_output_dir("07_calling_density"), "joint_daily_posteriors.rds"))
   hourly <- readRDS(file.path(full_output_dir("07_calling_density"), "hourly_posterior.rds"))
-  density_scaling <- as.data.frame(read_table(full_asset("host_density_scaling"),
+  density_scaling <- as.data.frame(read_table(input_file("host_density_scaling"),
                                              c("imputation", "host_group", "centre", "scale")))
   if (M != 3L || length(joint) != M) stop("City exposure requires the three matching host imputations.", call. = FALSE)
 

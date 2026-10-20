@@ -136,7 +136,7 @@ build_hourly_stan_data <- function(hourly) {
 
 run_calling_density_models <- function() {
   require_package("posterior")
-  daily <- read_table(full_asset("joint_daily_data"))
+  daily <- read_table(input_file("joint_daily_data"))
   if (!"imputation" %in% names(daily) || !setequal(unique(daily$imputation), 1:3)) {
     stop("joint_daily_data must contain the three retained host imputations (imputation = 1, 2, 3).", call. = FALSE)
   }
@@ -162,7 +162,7 @@ run_calling_density_models <- function() {
   saveRDS(bundles, file.path(out, "joint_daily_posteriors.rds"))
   write_table(do.call(rbind, summaries), file.path(out, "joint_daily_summary.csv"))
 
-  hourly <- read_table(full_asset("hourly_calling_counts"))
+  hourly <- read_table(input_file("hourly_calling_counts"))
   hourly_data <- build_hourly_stan_data(hourly)
   ensure_dir(file.path(out, "hourly_chains"))
   hourly_fit <- fit_cmdstan_model(

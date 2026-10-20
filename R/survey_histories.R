@@ -115,15 +115,15 @@ make_tpg_data <- function(daily, weekly_covariates, detection_covariates, respon
 
 run_prepare_survey_histories <- function() {
   effort <- read_table(
-    full_asset("survey_effort"),
+    input_file("survey_effort"),
     c("station_id", "date", "scheduled_minutes", "usable_minutes")
   )
   detections <- read_table(
-    full_asset("acoustic_detections"),
+    input_file("acoustic_detections"),
     c("station_id", "date", "sampled_minute", "species_group")
   )
-  calendar_path <- full_asset("date_week_registry", required = FALSE)
-  if (is.null(calendar_path)) stop("Supply the authoritative date_week_registry for a study run.", call.=FALSE)
+  calendar_path <- input_file("survey_calendar", required = FALSE)
+  if (is.null(calendar_path)) stop("Supply the survey calendar for a study run.", call.=FALSE)
   daily <- prepare_survey_histories(effort, detections, read_table(calendar_path))
   out <- full_output_dir("01_survey_histories")
   write_table(daily, file.path(out, "daily_survey_histories.csv"))

@@ -179,7 +179,7 @@ paired_station_contrast <- function(station_scores) {
 }
 
 run_transfer_validation <- function(M = 3L) {
-  folds <- read_table(full_asset("fold_registry"), c("station_id", "fold_id"))
+  folds <- read_table(input_file("validation_folds"), c("station_id", "fold_id"))
   # Host-inclusive transfer is evaluated at 250 m. The 100/500-m comparison
   # uses a separate no-host coordinate-trend model (Supplementary Data 10A).
   scales <- 250L
@@ -189,11 +189,11 @@ run_transfer_validation <- function(M = 3L) {
 
   for (scale_m in scales) {
     weekly_asset <- paste0("weekly_covariates_", scale_m)
-    weekly_path <- full_asset(weekly_asset)
+    weekly_path <- input_file(weekly_asset)
     for (fold_id in sort(unique(folds$fold_id))) {
       daily <- read_table(file.path(full_output_dir("01_survey_histories"), "daily_survey_histories.csv"))
       weekly <- read_table(weekly_path, c("station_id", "study_week"))
-      detection <- read_table(full_asset("daily_detection_covariates"))
+      detection <- read_table(input_file("daily_detection_covariates"))
       all_data <- make_tpg_data(daily, weekly, detection, "koel")
       sites <- dimnames(all_data$y)[[1]]
       test_sites <- folds$station_id[folds$fold_id == fold_id]

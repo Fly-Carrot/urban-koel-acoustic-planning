@@ -1,6 +1,6 @@
 # Third-party sources and notices
 
-The source rasters, raw OpenStreetMap records, AI model weights and acoustic recordings used in the study are not included here. Obtain third-party source data from the providers below and follow their terms.
+Source rasters, raw OpenStreetMap records, AI model weights and the full acoustic archive are not included here. Two author-supplied listening examples are available under `supplementary-materials/audio/`. Obtain third-party source data from the providers below and follow their terms.
 
 | Source | Study use | Redistribution in this repository | Licence and official source |
 |---|---|---|---|
@@ -12,4 +12,4 @@ The source rasters, raw OpenStreetMap records, AI model weights and acoustic rec
 | AudioMoth | acoustic acquisition hardware | Not applicable | Open hardware documentation; [Open Acoustic Devices](https://www.openacousticdevices.info/audiomoth) |
 | BirdNET v2.4 | locally adapted species classification | No code or model weights | Analyzer code and model assets have different terms; model weights are CC BY-NC-SA 4.0; [BirdNET-Analyzer](https://github.com/birdnet-team/BirdNET-Analyzer) |
 
-Derived project-owned aggregate summaries under `data/processed/reference/` and public manuscript supplements under `supplementary-materials/` contain no redistributed source pixels, granular OSM records, exact recorder or candidate coordinates, or model weights. Their scoped licences are documented in `data/LICENSE.md` and `supplementary-materials/LICENSE.md`; the root BSD licence applies to project-owned software.
+Derived project-owned summaries under `results/` and public manuscript supplements under `supplementary-materials/` contain no redistributed source pixels, granular OSM records, exact recorder or candidate coordinates, or model weights. Their licences are documented in `data/LICENSE.md` and `supplementary-materials/LICENSE.md`; the root BSD licence applies to project-owned software.

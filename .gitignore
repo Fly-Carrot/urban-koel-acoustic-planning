@@ -23,6 +23,7 @@ outputs/*
 data/raw/
 data/full/
 data/private/
+data/input_files.csv
 *.wav
 *.flac
 *.mp3

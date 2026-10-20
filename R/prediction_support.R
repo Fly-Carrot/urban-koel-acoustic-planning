@@ -77,8 +77,8 @@ classify_prediction_support <- function(training, city, predictors = environment
 }
 
 run_prediction_support <- function() {
-  training <- read_table(full_asset("training_predictors_250"), c("station_id"))
-  city <- read_table(full_asset("city_predictors_250"),
+  training <- read_table(input_file("training_predictors_250"), c("station_id"))
+  city <- read_table(input_file("city_predictors_250"),
                      c("cell_id", "dominant_land_cover", "permanent_water"))
   support <- classify_prediction_support(training, city)
   out <- full_output_dir("09_prediction_support")

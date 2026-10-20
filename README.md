@@ -1,57 +1,63 @@
-# Supplementary materials and analysis code
+# Urban planning leaves an audible legacy in a megacity’s bird soundscape
 
-Accompanying materials for *Urban planning leaves an audible legacy in a megacity’s bird soundscape*.
+Analysis code, processed study data and supplementary materials for the Asian Koel (*Eudynamys scolopaceus*) study in Shenzhen, China.
 
-## Materials
+## Contents
 
-| Material | Open |
+| Folder | Contents |
 |---|---|
-| Supplementary Methods S1–S9 and captions | [Complete PDF](supplementary-materials/supplementary-information/Supplementary_Information.pdf) |
-| Supplementary Data 1–17 | [Excel files and titles](supplementary-materials/tables/README.md) |
-| Supplementary Figures 1–10 | [PDFs and previews](supplementary-materials/figures/README.md) |
-| Main figures and Table 1 | [Figures](supplementary-materials/main-figures/README.md) · [Table](supplementary-materials/main-tables/README.md) |
-| Model-ready study inputs | [Data and field notes](data/model-inputs/README.md) |
-| Selected posterior draws and reported summaries | [Draws](data/model-outputs/README.md) · [Summary CSVs](data/processed/reference/) |
+| [analysis](analysis/) | Numbered R scripts, model refitting and recalculation of published results |
+| [R](R/) · [stan](stan/) | Data preparation, model fitting, validation and prediction functions |
+| [data/model-inputs](data/model-inputs/) | De-identified study inputs, model designs and fixed validation folds |
+| [results/summaries](results/summaries/) | Model effects, validation, weekly predictions, planning and monitoring summaries |
+| [results/posterior_draws](results/posterior_draws/) | Selected coefficient draws, training scales and reference results |
+| [Supplementary Data 1–17](supplementary-materials/tables/) | Excel workbooks; `Table_S01.xlsx` corresponds to Supplementary Data 1 |
+| [Supplementary Information](supplementary-materials/supplementary-information/Supplementary_Information.pdf) · [figures](supplementary-materials/figures/) | Supplementary methods and figures |
+| [Main figures](supplementary-materials/main-figures/) · [Table 1](supplementary-materials/main-tables/) | Figure and table files |
+| [Audio examples](supplementary-materials/audio/README.md) | Two original recordings of Koel vocalizations |
 
-Updated **15 October 2026** to match the current Science Advances submission files. Figure panels use uppercase letters. Public copies omit precise coordinates and private station/candidate identifiers; workbook sheet names and numerical results are retained.
+## Recalculate the published results
 
-## Analysis
+Run from the repository folder, using R:
 
-The numbered files in [analysis/](analysis/) follow the paper. Functions in [R/](R/) perform the calculations; [stan/](stan/) contains the calling-density models.
-
-| Step | Code |
-|---|---|
-| Prepare daily detections and recording effort | [Survey histories](R/survey_histories.R) |
-| Fit detection, host and Koel models | [Occupancy models](R/occupancy_models.R) |
-| Test transfer to withheld stations | [Transfer validation](R/transfer_validation.R) |
-| Fit daily and hourly calling density | [Calling density](R/calling_density.R) |
-| Recalculate city predictions and dawn summaries | [Retained-draw calculations](R/reproduce_study.R) |
-| Identify prediction boundaries | [PID and AOA](R/prediction_support.R) |
-| Select the next monitoring sites | [Monitoring design](R/monitoring_design.R) |
-
-[Methods-to-code map](docs/code_map.md) · [Script notes](docs/script_reference.md) · [Model roles](docs/model_registry.md) · [Verification](docs/verification.md)
-
-## Run
-
-```bash
-git clone https://github.com/Fly-Carrot/urban-koel-acoustic-planning.git
-cd urban-koel-acoustic-planning
-make setup
-make verify
-make test
-make reproduce
+```r
+install.packages(c("data.table", "jsonlite", "matrixStats", "reformulas"))
 ```
 
-`verify` checks reported summaries. `test` checks calculations and released inputs. `reproduce` recalculates citywide weekly predictions, dawn overlap summaries and monitoring sequences from retained draws; it does not run MCMC again.
+```bash
+Rscript analysis/reproduce_retained.R
+# Or choose one part:
+Rscript analysis/reproduce_retained.R weekly
+Rscript analysis/reproduce_retained.R planning
+Rscript analysis/reproduce_retained.R monitoring
+```
 
-To refit a retained model, use `Rscript analysis/fit_released_input.R full_H4_M01` after installing modelling packages. [Running instructions](docs/reproduce.md) describe requirements and the parts not rerun here.
+Results are written to `outputs/full/retained_reproduction/`. This recalculates 13,714 cells × 52 weeks from 600 weekly-model draws, planning summaries from 300 matched joint-model draws, and both monitoring sequences. It does not refit the models.
 
-## Sharing and interpretation
+## Refit a model
 
-Study inputs use ST01–ST31 and randomly assigned cell codes. Dates and environmental measurements remain real: these are **de-identified data**, not a guarantee against re-identification. Exact positions, private identity maps, raw recordings, AI weights and source rasters are not distributed. [Data access](docs/data_access.md)
+Fitting also requires `spOccupancy`, `loo` and `posterior`; Stan models require [cmdstanr and CmdStan](https://mc-stan.org/cmdstanr/articles/cmdstanr.html). The original MCMC schedules can take hours.
 
-Acoustic opportunity, detectability and sampled-minute exposure describe different parts of the recording process. They do not measure abundance or residents’ perceived disturbance. [Definitions](docs/scientific_boundaries.md)
+```bash
+Rscript analysis/fit_released_input.R full_corvid_assemblage
+Rscript analysis/fit_released_input.R full_H4_M01
+Rscript analysis/fit_released_input.R fold01_H4_M01_train
+Rscript analysis/fit_released_input.R full_HEQZ_M01
+Rscript analysis/fit_released_input.R D1
+```
 
-Please cite the manuscript and repository commit used. [Citation metadata](CITATION.cff)
+Names match the files in `data/model-inputs/occupancy/`, `daily/` or `hourly/`, without `.json.gz`. Outputs go to `outputs/full/released_fits/`. Test inputs are for scoring, not fitting. Full-data season-only S1 inputs are included for comparison, but their original fitting seed has not been verified, so the script does not refit them.
 
-Code: [BSD-3-Clause](LICENSE). Project-owned data/materials: [CC BY 4.0](data/LICENSE.md). OSM-derived planning data: ODbL 1.0. [Source notices](THIRD_PARTY_NOTICES.md)
+## Analysis steps
+
+Scripts `01–12` cover survey filtering, detection models, environmental predictors, potential hosts, Koel opportunity, held-station validation, calling density, city prediction, prediction support, planning overlaps and monitoring design. The calculations are in the corresponding R functions.
+
+To adapt these steps to another dataset, copy `data/input_files_example.csv` to `data/input_files.csv`, supply your prepared tables, and run `Rscript analysis/run_all.R`. See [data notes](data/README.md) for the required fields. This route fits new models; it is separate from recalculating the retained study results above. Its planning step summarises weekly opportunity, whereas the retained-study calculation uses the joint model and dawn calling density.
+
+## Data and interpretation
+
+The released inputs contain real observations with private station and cell identities replaced. Precise coordinates, source rasters, granular POI records, AI weights and complete MCMC chains are not included. Coordinate-based diagnostics and historical 100/500 m comparisons are reported in the supplementary materials but cannot all be rerun from this export. The two listening examples are separate from the full recording archive.
+
+Weekly acoustic opportunity and sampled-minute exposure describe recorded vocal activity, not abundance or residents’ perceived disturbance. Three host-information sets propagate host uncertainty; they are not three MCMC chains. Selected draws support recalculation, not a fresh convergence assessment.
+
+Code is [BSD-3-Clause](LICENSE). Project-owned data and supplementary materials are [CC BY 4.0](data/LICENSE.md); OpenStreetMap-derived components retain ODbL terms. See [source notices](THIRD_PARTY_NOTICES.md). Please cite the associated manuscript and identify the repository version used.

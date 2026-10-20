@@ -1,5 +1,20 @@
 # Read model inputs, build design matrices and summarise posterior draws.
 
+repo_root <- function() {
+  here <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
+  repeat {
+    if (file.exists(file.path(here, "CITATION.cff")) && dir.exists(file.path(here, "analysis"))) return(here)
+    parent <- dirname(here)
+    if (identical(parent, here)) stop("Run the script from the repository folder.", call. = FALSE)
+    here <- parent
+  }
+}
+
+ensure_dir <- function(path) {
+  if (!dir.exists(path)) dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  invisible(path)
+}
+
 require_package <- function(package) {
   if (!requireNamespace(package, quietly = TRUE)) {
     stop("Install the R package '", package, "' to run the full analysis.", call. = FALSE)
@@ -12,27 +27,30 @@ full_output_dir <- function(step = NULL) {
   ensure_dir(path)
 }
 
-read_full_manifest <- function() {
-  path <- file.path(repo_root(), "data", "full", "manifest.csv")
-  manifest <- read_csv_release(path, c("asset_id", "path"))
-  if (anyDuplicated(manifest$asset_id)) {
-    stop("Each asset_id in data/full/manifest.csv must be unique.", call. = FALSE)
+read_input_files <- function() {
+  path <- file.path(repo_root(), "data", "input_files.csv")
+  if (!file.exists(path)) {
+    stop("For a new dataset, copy data/input_files_example.csv to data/input_files.csv and fill in your file paths. To recalculate the published results, run analysis/reproduce_retained.R instead.", call. = FALSE)
   }
-  manifest
+  files <- read_table(path, c("input", "path"))
+  if (anyNA(files$input) || anyNA(files$path) || anyDuplicated(files$input)) {
+    stop("Each input must have one name and one path in data/input_files.csv.", call. = FALSE)
+  }
+  as.data.frame(files)
 }
 
-full_asset <- function(asset_id, required = TRUE) {
-  manifest <- read_full_manifest()
-  row <- manifest[manifest$asset_id == asset_id, , drop = FALSE]
+input_file <- function(name, required = TRUE) {
+  files <- read_input_files()
+  row <- files[files$input == name, , drop = FALSE]
   if (!nrow(row)) {
     if (!required) return(NULL)
-    stop("The full-data manifest is missing asset_id: ", asset_id, call. = FALSE)
+    stop("Add the input '", name, "' to data/input_files.csv.", call. = FALSE)
   }
   path <- row$path[[1]]
   if (!grepl("^(/|[A-Za-z]:[/\\\\])", path)) {
     path <- file.path(repo_root(), path)
   }
-  if (!file.exists(path)) stop("Full-data asset is missing: ", asset_id, call. = FALSE)
+  if (!file.exists(path)) stop("Input file not found for '", name, "': ", path, call. = FALSE)
   normalizePath(path, winslash = "/", mustWork = TRUE)
 }
 
@@ -52,8 +70,6 @@ write_table <- function(x, path) {
   data.table::fwrite(data.table::as.data.table(x), path, na = "NA")
   invisible(path)
 }
-
-read_rds_asset <- function(asset_id) readRDS(full_asset(asset_id))
 
 week_terms <- function(week) {
   data.frame(

@@ -86,9 +86,9 @@ deployment_portfolios <- function(result, sizes = c(5L, 10L, 15L)) {
 }
 
 run_monitoring_design <- function() {
-  settings <- read_table(full_asset("monitoring_settings"), c("parameter", "value"))
-  result <- rank_monitoring(read_table(full_asset("training_predictors_250")), read_table(full_asset("city_predictors_250")),
-                            read_table(full_asset("monitoring_candidates")), read_table(full_asset("spacing_conflicts")),
+  settings <- read_table(input_file("monitoring_settings"), c("parameter", "value"))
+  result <- rank_monitoring(read_table(input_file("training_predictors_250")), read_table(input_file("city_predictors_250")),
+                            read_table(input_file("monitoring_candidates")), read_table(input_file("spacing_conflicts")),
                             settings$value[settings$parameter == "minimum_spacing_m"])
   out <- full_output_dir("11_monitoring_design")
   write_table(result$sequence, file.path(out, "monitoring_sequences.csv"))

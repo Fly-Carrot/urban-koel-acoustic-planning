@@ -7,13 +7,13 @@ environmental_predictor_names <- function() {
 
 validate_environmental_predictors <- function() {
   require_package("data.table")
-  weekly <- read_table(full_asset("weekly_covariates_250"), c("station_id", "study_week"))
-  city <- read_table(full_asset("city_predictors_250"), c("cell_id"))
+  weekly <- read_table(input_file("weekly_covariates_250"), c("station_id", "study_week"))
+  city <- read_table(input_file("city_predictors_250"), c("cell_id"))
   needed <- environmental_predictor_names()
   missing_weekly <- setdiff(needed, names(weekly))
   missing_city <- setdiff(needed, names(city))
   if (length(missing_weekly) || length(missing_city)) {
-    stop("Environmental inputs do not contain the seven registered predictors.", call. = FALSE)
+    stop("Environmental inputs do not contain the seven study predictors.", call. = FALSE)
   }
   if (any(!is.finite(as.matrix(weekly[, ..needed])))) stop("Station predictors contain non-finite values.", call. = FALSE)
   if (any(!is.finite(as.matrix(city[, ..needed])))) stop("City predictors contain non-finite values.", call. = FALSE)
