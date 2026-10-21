@@ -1,6 +1,6 @@
 # Data notes
 
-`model-inputs/` contains actual numerical study inputs, with private identities replaced. These are not simulated data. Station codes ST01–ST31 and anonymous cell codes match across files. Dates and environmental values remain real; the data are de-identified, not guaranteed unidentifiable. Do not attempt to identify recorder locations.
+`model-inputs/` contains processed observations and model inputs from the study. Private identifiers have been replaced with consistent station codes ST01–ST31 and anonymous cell codes. Survey dates and environmental predictor values are retained.
 
 ## Study inputs
 
@@ -21,15 +21,41 @@ Occupancy arrays use `{dim, values}` in R column-major order: `array(values, dim
 
 [Summary CSVs](../results/summaries/) contain model effects, validation, annual-week predictions, support classes, planning overlaps and monitoring sequences. `model_formulas.csv`, `predictor_definitions.csv` and `host_groups.csv` describe the models and species groups.
 
-[Posterior draws](../results/posterior_draws/) include 200 weekly H4 draws per host-information set (600 pooled), 100 joint HEQZ draws per set (300 pooled), matched D1 draws, host coefficients and training scales. H4 weekly-map coefficients and HEQZ joint-model coefficients come from different fits and must not be interchanged.
+[Posterior draws](../results/posterior_draws/) include 200 weekly H4 draws per host-information set (600 pooled), 100 joint HEQZ draws per set (300 pooled), matched D1 draws, host coefficients and training scales. Use H4 coefficients for weekly maps and HEQZ coefficients for joint-model exposure and planning summaries. The three host-information sets carry host uncertainty into the Koel predictions.
 
-`psi` is weekly acoustic opportunity; `p` is conditional daily detectability; `mu_plus` is positive-day sampled-minute probability; `E = psi * p * mu_plus`. `q025` and `q975` bound a 95% credible interval. Percentages use 0–100; probabilities use 0–1. Missing values are blank or `NA`, never zero. In `model_effects.csv`, `positive_day_minute_probability` labels the density branch, whose coefficients enter the underlying `logit(mu)`, not a separate regression for derived `mu_plus`.
+`psi` is weekly acoustic opportunity; `p` is conditional daily detectability; `mu_plus` is positive-day sampled-minute probability; `E = psi * p * mu_plus`. These quantities describe vocal activity under the study's recording schedule. Host effects describe predictive associations among acoustic responses. `q025` and `q975` bound a 95% credible interval. Percentages use 0–100; probabilities use 0–1. Missing values are blank or `NA`. Recorded non-detections use zero. In `model_effects.csv`, `positive_day_minute_probability` labels the density branch. Its coefficients enter the underlying `logit(mu)`; `mu_plus` is calculated by conditioning on positive days.
 
-Fitting uses a dated 365.2425-day annual phase. The retained city projection uses a 52-week cycle. Density host indices use retained annual training scales, not city-wide scales.
+Fitting uses a dated 365.2425-day annual phase. The retained city projection uses a 52-week cycle. Density host indices use the saved annual training scales.
+
+## Running the code
+
+To recalculate one part of the study:
+
+```bash
+Rscript analysis/reproduce_retained.R weekly
+Rscript analysis/reproduce_retained.R planning
+Rscript analysis/reproduce_retained.R monitoring
+```
+
+The complete command, `Rscript analysis/reproduce_retained.R`, runs all three calculations from the saved posterior draws. Weekly prediction covers 13,714 cells × 52 weeks with 600 weekly-model draws. Planning summaries use 300 matched joint-model draws and the D1 hourly model. Monitoring calculations produce both site-selection sequences. Outputs are saved in `outputs/full/retained_reproduction/`.
+
+Model fitting also requires the R packages `spOccupancy`, `loo` and `posterior`. Stan fitting requires [cmdstanr and CmdStan](https://mc-stan.org/cmdstanr/articles/cmdstanr.html). The scripts use the study's MCMC settings; fitting can take hours.
+
+```bash
+Rscript analysis/fit_released_input.R full_corvid_assemblage
+Rscript analysis/fit_released_input.R full_H4_M01
+Rscript analysis/fit_released_input.R fold01_H4_M01_train
+Rscript analysis/fit_released_input.R full_HEQZ_M01
+Rscript analysis/fit_released_input.R D1
+```
+
+The examples use inputs from `model-inputs/occupancy/`, `daily/` and `hourly/`. Outputs are saved in `outputs/full/released_fits/`. Use training inputs for fitting and test inputs for validation. Full-data season-only S1 inputs are supplied for model comparison. Supported refitting examples are listed above.
 
 ## Using another dataset
 
-The numbered scripts require your own prepared tables, listed in `input_files.csv`. The example gives file paths only; it is not another copy of the study data.
+Scripts `01–12` cover survey filtering, detection models, environmental predictors, potential hosts, Koel opportunity, held-station validation, calling density, city prediction, prediction support, planning overlaps and monitoring design. The corresponding R functions contain the calculations.
+
+To use another dataset, copy `data/input_files_example.csv` to `data/input_files.csv` and enter the paths to your prepared tables. Then run `Rscript analysis/run_all.R`. This command fits models for the supplied dataset. Its planning step summarises weekly opportunity; the study recalculation above produces joint-model dawn summaries.
 
 | Input name | Required fields |
 |---|---|
